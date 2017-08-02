@@ -1,0 +1,22 @@
+Pictures
+--------
+Profile Placeholder	https://www.iconfinder.com/icons/309035/account_human_person_user_icon#size=256	License: Creative Commons (Attribution 3.0 Unported) 
+
+
+Icons
+-------
+nrWords 		https://www.iconfinder.com/icons/536278/color_office_text_tool_icon#size=16  Creative Commons (Attribution 3.0 Unported) 
+nrImages		https://www.iconfinder.com/icons/1564523/gallery_image_photo_pic_picture_icon#size=512  Creative Commons (Attribution 3.0 Unported) 
+nrLinks			https://www.iconfinder.com/icons/678136/circle_link_network_sharing_icon#size=128 License: Free for commercial use (Include link to authors website) --> https://www.iconfinder.com/zapolzun
+nrUploadedImages	https://www.iconfinder.com/icons/678133/arrow_file_up_upload_icon#size=16 License: Free for commercial use (Include link to authors website) --> https://www.iconfinder.com/zapolzun
+nrRessources		https://www.iconfinder.com/icons/118726/book_icon#size=512 Attribution-Non-Commercial 3.0 Netherlands 
+Mahara			https://pbs.twimg.com/profile_images/818640969683697664/vnXZ7bsa.jpg
+Checkmark		https://www.iconfinder.com/icons/211644/checkmark_icon#size=512 MIT License
+Cancel			https://www.iconfinder.com/icons/216128/cancel_icon#size=512 Creative Commons (Attribution-Share Alike 3.0 Unported)
+lexicalDensity		selfmade
+
+Link to License
+---------------
+https://creativecommons.org/licenses/by-sa/3.0/
+https://creativecommons.org/licenses/by-nc/3.0/nl/deed.en_GB
+https://opensource.org/licenses/MIT
