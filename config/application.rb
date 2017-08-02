@@ -14,6 +14,6 @@ module PortfoliosDashboard
     # -- all .rb files in that directory are automatically loaded.
 
     # GLOBAL VARIABLE for solr access in workarounds
-    config.solr_server = 'http://www.yourserver.com/solr/test'
+    config.solr_server = 'http://www.yourserver.com/solr/testing'
   end
 end
