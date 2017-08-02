@@ -1,0 +1,176 @@
+<% 
+# Explanation: 
+# The solr-response returns result objects. Each object stands for one result.
+# Iterate over the objects, grab the date and push it as string into the ruby array
+# After the loop: Convert Ruby array into Javascript array.
+# Then build an array containing json for D3 visualisation.
+# D3 visualisation will parse the incoming dates into the needed format
+# TODO: replace indexDate with lastModified field.
+# TODO: take a simple array instead of an array containing json
+-%>
+
+<%# Get dates and push them into an array %>
+<% @ruby_arr = Array.new() -%>
+<% @response.documents.each do |object| -%>
+	<% doc_presenter = index_presenter(object) %>
+	<% date = doc_presenter.field_value "indexDate" %>
+	<% @ruby_arr.push(date) %>
+<% end -%>
+
+<!-- Div where histogram gets appended -->
+<div class="histogram"></div>
+
+<script type="text/javascript">
+
+	/* Convert ruby array to JS, 
+	iterate and build json format */	
+	var js_arr = <%=raw @ruby_arr%>;
+	data = new Array();
+	js_arr.forEach(function(date) {
+		data.push({"date": date});
+	});
+
+	// Array for testing.
+	 var data = [{"date":"2017-03-27T15:41:34Z"},{"date":"2017-03-27T15:41:34Z"},{"date":"2017-04-07T15:41:34Z"},{"date":"2017-04-01T15:41:34Z"},{"date":"2017-04-01T15:41:34Z"},{"date":"2017-04-01T15:41:34Z"},
+	 {"date":"2017-04-07T15:41:34Z"},{"date":"2017-04-08T15:41:34Z"},{"date":"2017-04-09T15:41:34Z"},{"date":"2017-04-10T15:41:34Z"}];
+
+	// parseDate: Format the parser will use
+	// formatCount: Format the bar labels will use
+	var parseDate = d3.timeParse("%Y-%m-%dT%H:%M:%S%Z");
+	var formatCount = d3.format(",.0f");
+	var tooltip_date = d3.timeFormat("%d.%m.%Y");
+
+	// the next block is changing the language to german
+	// see: https://bl.ocks.org/mbostock/805115ebaa574e771db1875a6d828949
+	var locale = d3.timeFormatLocale({
+	  "dateTime": "%A, der %e. %B %Y, %X",
+	  "date": "%d.%m.%Y",
+	  "time": "%H:%M:%S",
+	  "periods": ["AM", "PM"],
+	  "days": ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"],
+	  "shortDays": ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"],
+	  "months": ["Januar", "Februar", "MÃ¤rz", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"],
+	  "shortMonths": ["Jan", "Feb", "Mrz", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"]
+	});
+
+	var formatMillisecond = locale.format(".%L"),
+	    formatSecond = locale.format(":%S"),
+	    formatMinute = locale.format("%I:%M"),
+	    formatHour = locale.format("%I %p"),
+	    formatDay = locale.format("%a %d"),
+	    formatWeek = locale.format("%b %d"),
+	    formatMonth = locale.format("%b"),
+	    formatYear = locale.format("%Y");
+
+	function multiFormat(date) {
+	  return (d3.timeSecond(date) < date ? formatMillisecond
+	      : d3.timeMinute(date) < date ? formatSecond
+	      : d3.timeHour(date) < date ? formatMinute
+	      : d3.timeDay(date) < date ? formatHour
+	      : d3.timeMonth(date) < date ? (d3.timeWeek(date) < date ? formatDay : formatWeek)
+	      : d3.timeYear(date) < date ? formatMonth
+	      : formatYear)(date);
+	}
+
+
+	// set the dimensions and margins of the graph	 
+	var margin = {top: 10, right: 17, bottom: 30, left: 17},
+	    width = 815 - margin.left - margin.right,
+	    height = 130 - margin.top - margin.bottom;
+	    bar_color = "steelblue";
+
+	var x = d3.scaleTime()
+	    .domain([new Date(2017, 0, 1), new Date(2018, 0, 1)])
+	    .rangeRound([0, width]);  
+
+	var y = d3.scaleLinear()
+	    .range([height, 0]);
+
+	var histogram = d3.histogram()
+	    .value(function(d) { return d.date; })
+	    .domain(x.domain())
+	    .thresholds(x.ticks(d3.timeWeek));
+
+	// append the svg object to the body of the page	 
+	var svg = d3.select(".histogram").append("svg")
+		.attr("width", width + margin.left + margin.right)
+		.attr("height", height + margin.top + margin.bottom)
+		.append("g")
+		.attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+	
+	// Add x axis and ticks
+	svg.append("g")
+		.attr("class", "axis axis--x")
+		.attr("transform", "translate(0," + height + ")")
+		.call(d3.axisBottom(x).tickFormat(multiFormat));
+
+	// format the data
+	data.forEach(function(d){
+		d.date = parseDate(d.date)
+	})
+
+	var bins = histogram(data);
+	y.domain([0, d3.max(bins, function(d) { return d.length; })]);
+
+	// Append bars and add mouse interactions
+	var bar = svg.selectAll(".bar")	
+		.data(bins)
+		.enter().append("g")
+		.attr("fill", bar_color)
+		.attr("transform", function(d) { return "translate(" + x(d.x0) + "," + y(d.length) + ")"; })
+		.on("mouseover", function(d){
+			var count = formatCount(d.length);
+			if (count!=0) {
+				// save old color to reset it later
+				bar_color = d3.rgb(d3.select(this).attr("fill"));
+				d3.select(this)
+				.style("fill", function() {
+					return d3.rgb(d3.select(this).attr("fill")).darker(0.4);
+				});			
+				var first = tooltip_date(d[0].date);
+				var last =  tooltip_date(d[count-1].date);
+				if(first == last) {
+					tooltip.html(count + " Ansichten <br>" + first);	
+				} else {
+					tooltip.html(count + " Ansichten <br>" + first + " - " + last);
+				}
+				d3.select(this).style("cursor", "pointer");
+				return tooltip.style("visibility", "visible");
+			}
+		})
+		.on("mousemove", function(){return tooltip.style("top", (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+20)+"px");})
+		.on("mouseout", function(){
+			d3.select(this).style("fill", bar_color);
+			return tooltip.style("visibility", "hidden");
+		});   			
+
+	// Append rect)
+	bar.append("rect")
+		.attr("x", 1)
+		.attr("width", function(d) { return x(d.x1) - x(d.x0) - 1; })
+		.attr("height", function(d) { return height - y(d.length); });
+
+	// Print values into bars
+	// Hide text that is "0"
+	bar.append("text")
+		.attr("dy", "1em")
+		.attr("y", 0)
+		.attr("fill", "white")
+		.attr('font-size', '0.7em')
+		.attr("x", function(d) { return (x(d.x1) - x(d.x0)) / 2; })
+		.attr("text-anchor", "middle")
+		.text(function(d) {
+			if(d.length == 0) {d3.select(this).style("visibility", "hidden");}
+			return formatCount(d.length);}
+		);
+
+</script>
+
+
+
+
+
+
+
+
+

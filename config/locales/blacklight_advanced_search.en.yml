@@ -1,0 +1,15 @@
+en:
+  blacklight_advanced_search:
+    all: alle
+    any: beliebige
+    form:
+      nav_button: Erweiterte Suche
+      title: Erweiterte Suche
+      search_context: "Suche in:"
+      limit_criteria_heading_html: "in folgenden Kategorien"
+      query_criteria_heading_html: " Ressourcen anzeigen, die %{select_menu} Felder erfüllen"
+      #query_criteria_heading_html: "Ressourcen mit %{select_menu} Feldern durchsuchen"
+      #query_criteria_heading_html: "Find items that match %{select_menu} of"
+      sort_label: "Sortieren nach"
+      start_over: "Neue Suche"
+      search_btn: 'Suche'

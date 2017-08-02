@@ -1,0 +1,27 @@
+<%# This file shows the data of single document %>
+<%# default partial to display solr document fields in catalog show view -%>
+<%# TODO: rSolr-Workaround durch Blacklight-Funktionen ersetzen  %>
+<%# TODO: Ansonsten den Workaround als Funktion auslagern- %>
+
+<% doc_presenter = show_presenter(document) %>
+<% assessed = [true, false].sample %> <%# Fake TODO: use field instead %>
+<% d = DateTime.parse(doc_presenter.field_value "indexDate") %> <%# Fake! TODO Use Modified-Field instead %>
+<% last_modified = d.strftime('%d.%m.%Y').to_s + " um " + d.strftime('%I:%M').to_s + " (= IndexDate!)" %>
+
+
+<%# ---- Content: lecture, date and text ---- %>
+<div class="row">
+	<div class="col-sm-1 col-md-1">
+		<img src="/result/student-placeholder.png" alt="student-placeholder" class="student-placeholder" />
+	</div>
+	<div class="col-sm-11 col-md-11">
+		<div class="result_sub"><%= t('blacklight.results.author')%><%= doc_presenter.field_value "author" %></div>
+		<div class="result_sub"><%= t('blacklight.results.lecture')%><%= doc_presenter.field_value "lecture" %></div>
+		<div class="result_sub"><%= t('blacklight.results.last_modified')%><%= last_modified %></div>
+		<p><%#= doc_presenter.field_value "text" %>			
+	</div>
+</div>
+
+<%= doc_presenter.field_value "text" %>
+
+

@@ -1,0 +1,51 @@
+<%-
+# Explanation:
+# The sidebar normally contains the tools sms, email and cite
+# For the dashboard these tools have been disabled in catalog_controller
+# The do loop gets obsolete too, so it is made a comment
+# Now the list contains a mahara-link and confirmation of assessment
+-%>
+<%-
+# Compare with render_document_functions_partial helper, and
+# _document_functions partial. BL actually has two groups
+# of document-related tools. "document functions" by default
+# contains Bookmark functionality shown on both results and
+# item view. While "document tools" contains external export type
+# functions by default only on detail.
+-%>
+
+<% assessed = [true, false].sample %> <%# Fake %>
+
+<% doc_presenter = index_presenter(@document) %>
+
+<div class="panel panel-default show-tools">
+  <div class="panel-heading">
+    <%= t('blacklight.tools.title') %>
+  </div>
+
+  <div class="panel-body">
+    <ul class="nav">
+        <li><a href="<%= doc_presenter.field_value "url" %>"><%=t('blacklight.tools.mahara')%></a></li>
+        <% if assessed == true %>
+          <li><a href="test"><%=t('blacklight.tools.not_assessed')%></a></li>
+        <% else %>
+          <li><a href="test"><%=t('blacklight.tools.assessed')%></a></li>
+        <% end %>
+        <li><a href="<%= doc_presenter.field_value "url" %>"><%=t('blacklight.tools.delete')%></a></li>        
+        
+    </ul>
+  </div>  
+
+  <!-- Original Sidebar
+  <div class="panel-body">
+    <ul class="nav">
+      <%= render_show_doc_actions @document do |config, inner| %>
+        <li class="<%= config.key %>">
+          <%= inner %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+  -->
+
+</div>

@@ -1,0 +1,13 @@
+<% # Explanation: -%>
+
+<% nrWordsSum = 0 -%>
+
+<% @response.documents.each do |object| -%>
+	<% doc_presenter = index_presenter(object) %>
+	<% nrWordsSum += (doc_presenter.field_value "nrWords").to_i -%>
+<% end -%>
+
+Wörter gesamt:
+<%= nrWordsSum %>
+
+

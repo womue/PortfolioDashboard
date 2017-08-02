@@ -1,0 +1,256 @@
+<%# Explanation: %>
+<%# TODO: Removing stop words is a solr thing! %>
+
+<%# http://www.ranks.nl/stopwords/german %>
+<% stop_words = /\b(?:#{ %w[ab aber abermaliges abermals abgerufen abgerufene abgerufener abgerufenes acht aehnlich aehnliche aehnlichem aehnlichen aehnlicher aehnliches aehnlichste aehnlichstem aehnlichsten aehnlichster aehnlichstes aeusserst aeusserste aeusserstem aeussersten aeusserster aeusserstes aeußerst aeußerste aeußerstem aeußersten aeußerster aeußerstes alle allein alleine allem allemal allen allenfalls allenthalben aller allerdings allerlei alles allesamt allg allg. allgemein allgemeine allgemeinem allgemeinen allgemeiner allgemeines allgemeinste allgemeinstem allgemeinsten allgemeinster allgemeinstes allmählich allzeit allzu als alsbald also am an andauernd andauernde andauerndem andauernden andauernder andauerndes ander andere anderem anderen anderer andererseits anderes anderm andern andernfalls anders anderst anderweitig anderweitige anderweitigem anderweitigen anderweitiger anderweitiges anerkannt anerkannte anerkannter anerkanntes anfangen anfing angefangen angesetze angesetzt angesetzten angesetzter ans anscheinend ansetzen ansonst ansonsten anstatt anstelle arbeiten auch auf aufgehört aufgrund aufhören aufhörte aufzusuchen augenscheinlich augenscheinliche augenscheinlichem augenscheinlichen augenscheinlicher augenscheinliches augenscheinlichst augenscheinlichste augenscheinlichstem augenscheinlichsten augenscheinlichster augenscheinlichstes aus ausdrücken ausdrücklich ausdrückliche ausdrücklichem ausdrücklichen ausdrücklicher ausdrückliches ausdrückt ausdrückte ausgenommen ausgenommene ausgenommenem ausgenommenen ausgenommener ausgenommenes ausgerechnet ausgerechnete ausgerechnetem ausgerechneten ausgerechneter ausgerechnetes ausnahmslos ausnahmslose ausnahmslosem ausnahmslosen ausnahmsloser ausnahmsloses ausser ausserdem ausserhalb author autor außen außer außerdem außerhalb baelde bald bearbeite bearbeiten bearbeitete bearbeiteten bedarf bedurfte bedürfen befahl befiehlt befiehlte befohlene befohlens befragen befragte befragten befragter begann beginnen begonnen behalten behielt bei beide beidem beiden beider beiderlei beides beim beinahe beisammen beispielsweise beitragen beitrugen bekannt bekannte bekannter bekanntlich bekanntliche bekanntlichem bekanntlichen bekanntlicher bekanntliches bekennen benutzt bereits berichten berichtet berichtete berichteten besonders besser bessere besserem besseren besserer besseres bestehen besteht bestenfalls bestimmt bestimmte bestimmtem bestimmten bestimmter bestimmtes betraechtlich betraechtliche betraechtlichem betraechtlichen betraechtlicher betraechtliches betreffend betreffende betreffendem betreffenden betreffender betreffendes beträchtlich beträchtliche beträchtlichem beträchtlichen beträchtlicher beträchtliches bevor bez bez. bezgl bezgl. bezueglich bezüglich bietet bin bis bisher bisherige bisherigem bisherigen bisheriger bisheriges bislang bisschen bist bißchen bleiben blieb bloss bloß brachte brachten brauchen braucht bringen bräuchte bsp bsp. bspw bspw. bzw bzw. bälde böden ca ca. circa da dabei dadurch dafuer dafür dagegen daher dahin dahingehend dahingehende dahingehendem dahingehenden dahingehender dahingehendes dahinter damalige damaligem damaligen damaliger damaliges damals damit danach daneben dank danke danken dann dannen daran darauf daraus darf darfst darin darueber darueberhinaus darum darunter darüber darüberhinaus das dass dasselbe Dat davon davor dazu dazwischen daß dein deine deinem deinen deiner deines dem demgegenueber demgegenüber demgemaess demgemaeß demgemäss demgemäß demnach demselben den denen denkbar denkbare denkbarem denkbaren denkbarer denkbares denn dennoch denselben der derart derartig derartige derartigem derartigen derartiger derem deren derer derjenige derjenigen derselbe derselben derzeit derzeitig derzeitige derzeitigem derzeitigen derzeitiges des deshalb desselben dessen dessenungeachtet desto desungeachtet deswegen dich die diejenige diejenigen dies diese dieselbe dieselben diesem diesen dieser dieses diesseitig diesseitige diesseitigem diesseitigen diesseitiger diesseitiges diesseits dinge dir direkt direkte direkten direkter doch doppelt dort dorther dorthin dran drauf drei dreißig drin dritte drueber drum drunter drüber du dunklen durch durchaus durchweg durchwegs durfte durften dürfen dürfte eben ebenfalls ebenso ect ect. ehe eher eheste ehestem ehesten ehester ehestes eigen eigene eigenem eigenen eigener eigenes eigenst eigentlich eigentliche eigentlichem eigentlichen eigentlicher eigentliches ein einbaün eine einem einen einer einerlei einerseits eines einfach einführen einführte einführten eingesetzt einig einige einigem einigen einiger einigermassen einigermaßen einiges einmal einmalig einmalige einmaligem einmaligen einmaliger einmaliges eins einseitig einseitige einseitigen einseitiger einst einstmals einzig empfunden ende entgegen entlang entsprechend entsprechende entsprechendem entsprechenden entsprechender entsprechendes entweder er ergo ergänze ergänzen ergänzte ergänzten erhalten erhielt erhielten erhält erneut erst erste erstem ersten erster erstere ersterem ersteren ersterer ersteres erstes eröffne eröffnen eröffnet eröffnete eröffnetes es etc etc. etliche etlichem etlichen etlicher etliches etwa etwaige etwas euch euer eure eurem euren eurer eures euretwegen fall falls fand fast ferner finden findest findet folgend folgende folgendem folgenden folgender folgendermassen folgendermaßen folgendes folglich fordern fordert forderte forderten fortsetzen fortsetzt fortsetzte fortsetzten fragte frau frei freie freier freies fuer fuers fünf für fürs gab gaenzlich gaenzliche gaenzlichem gaenzlichen gaenzlicher gaenzliches ganz ganze ganzem ganzen ganzer ganzes gar gbr geb geben geblieben gebracht gedurft geehrt geehrte geehrten geehrter gefallen gefiel gefälligst gefällt gegeben gegen gegenueber gegenüber gehabt gehen geht gekommen gekonnt gemacht gemaess gemeinhin gemocht gemäss genau genommen genug gepriesener gepriesenes gerade gern gesagt gesehen gestern gestrige getan geteilt geteilte getragen gewesen gewiss gewisse gewissem gewissen gewisser gewissermaßen gewisses gewollt geworden ggf ggf. gib gibt gleich gleiche gleichem gleichen gleicher gleiches gleichsam gleichste gleichstem gleichsten gleichster gleichstes gleichwohl gleichzeitig gleichzeitige gleichzeitigem gleichzeitigen gleichzeitiger gleichzeitiges gluecklicherweise glücklicherweise gmbh gottseidank gratulieren gratuliert gratulierte groesstenteils groeßtenteils grösstenteils größtenteils gute guten gängig gängige gängigen gängiger gängiges gänzlich gänzliche gänzlichem gänzlichen gänzlicher gänzliches hab habe haben haette haeufig haeufige haeufigem haeufigen haeufiger haeufigere haeufigeren haeufigerer haeufigeres halb hallo hast hat hatte hatten hattest hattet hen her heraus herein herum heute heutige heutigem heutigen heutiger heutiges hier hierbei hiermit hiesige hiesigem hiesigen hiesiger hiesiges hin hinein hingegen hinlanglich hinlänglich hinten hinter hinterher hinterm hintern hoch http hundert hätt hätte hätten häufig häufige häufigem häufigen häufiger häufigere häufigeren häufigerer häufigeres höchst höchstens ich igitt ihm ihn ihnen ihr ihre ihrem ihren ihrer ihres ihretwegen im immer immerhin immerwaehrend immerwaehrende immerwaehrendem immerwaehrenden immerwaehrender immerwaehrendes immerwährend immerwährende immerwährendem immerwährenden immerwährender immerwährendes immerzu important in indem indessen Inf. info infolge infolgedessen innen innerhalb ins insbesondere insgeheim insgeheime insgeheimer insgesamt insgesamte insgesamter insofern inzwischen irgend irgendein irgendeine irgendeinem irgendeiner irgendeines irgendjemand irgendjemandem irgendwann irgendwas irgendwen irgendwer irgendwie irgendwo ist ja jaehrig jaehrige jaehrigem jaehrigen jaehriger jaehriges je jede jedem jeden jedenfalls jeder jederlei jedes jedesmal jedoch jeglichem jeglichen jeglicher jegliches jemals jemand jene jenem jenen jener jenes jenseitig jenseitigem jenseitiger jenseits jetzt jährig jährige jährigem jährigen jähriges kaeumlich kam kann kannst kaum kein keine keinem keinen keiner keinerlei keines keineswegs klar klare klaren klares klein kleinen kleiner kleines koennen koennt koennte koennten komme kommen kommt konkret konkrete konkreten konkreter konkretes konnte konnten kuenftig kuerzlich kuerzlichst künftig kürzlich kürzlichst käumlich könn können könnt könnte könnten laengst lag lagen langsam lassen laut lediglich leer legen legte legten leicht leider lesen letze letzte letzten letztendlich letztens letztere letzterem letzterer letzteres letztes letztlich lichten liegt liest links längst längstens mache machen machst macht machte machten mag magst mal man manch manche manchem manchen mancher mancherlei mancherorts manches manchmal mann margin massgebend massgebende massgebendem massgebenden massgebender massgebendes massgeblich massgebliche massgeblichem massgeblichen massgeblicher mehr mehrere mehrerer mehreren mehrfach mehrmalig mehrmaligem mehrmaliger mehrmaliges mein meine meinem meinen meiner meines meinetwegen meins meist meiste meisten meistens meistenteils meta mich mindestens mir mit miteinander mitgleich mithin mitnichten mittels mittelst mitten mittig mitunter mitwohl mochte moeglichst moeglichste moeglichstem moeglichsten moeglichster morgen morgige muessen muesst muesste muss musst musste mussten muß mußt müssen müsste müssten müßt müßte möchte möchten möchtest mögen möglich mögliche möglichen möglicher möglicherweise möglichst möglichste möglichstem möglichsten möglichster nach nachdem nacher nachher nachhinein nacht naechste naemlich nahm naturgemaess naturgemaeß naturgemäss naturgemäß natürlich neben nebenan nehmen nein neu neue neuem neuen neuer neuerdings neuerlich neuerliche neuerlichem neuerlicher neuerliches neues neulich neun nicht nichts nichtsdestotrotz nichtsdestoweniger nie niemals niemand niemandem niemanden nimm nimmer nimmt nirgends nirgendwo noch noetigenfalls nun nur nutzen nutzt nutzung nützt nächste nämlich nötigenfalls ob oben ober oberen oberer oberhalb oberste obersten oberster obgleich obs obschon obwohl oder oefter oefters offenkundig offenkundige offenkundigem offenkundigen offenkundiger offenkundiges offensichtlich offensichtliche offensichtlichem offensichtlichen offensichtlicher offensichtliches oft oftmals ohne ohnedies paar partout per persoenlich persoenliche persoenlichem persoenlicher persoenliches persönlich persönliche persönlicher persönliches pfui ploetzlich ploetzliche ploetzlichem ploetzlicher ploetzliches plötzlich plötzliche plötzlichem plötzlicher plötzliches pro quasi reagiere reagieren reagiert reagierte recht rechts regelmäßig reichlich reichliche reichlichem reichlichen reichlicher restlos restlose restlosem restlosen restloser restloses richtiggehend richtiggehende richtiggehendem richtiggehenden richtiggehender richtiggehendes rief rund rundheraus rundum runter sage sagen hierfür sagt sagte sagten sagtest samt sang sangen sattsam scheinbar schlechter schlicht schlichtweg schliesslich schließlich schlussendlich schnell schon schreibe schreiben schreibens schreiber schwerlich schwerliche schwerlichem schwerlichen schwerlicher schwerliches schwierig schätzen schätzt schätzte schätzten sechs sect sehe sehen sehr sehrwohl seht sei seid sein seine seinem seinen seiner seines seit seitdem seite seiten seither selbe selben selber selbst selbstredend selbstredende selbstredendem selbstredenden selbstredender selbstredendes seltsamerweise senke senken senkt senkte senkten setzen setzt setzte setzten sich sicher sicherlich sie sieben siebte siehe sieht sind singt so sobald sodass sodaß soeben sofern sofort sog sogar sogleich solange solc solch solche solchem solchen solcher solches soll sollen sollst sollt sollte sollten solltest somit sondern sonst sonstig sonstige sonstigem sonstiger sonst wo so oft soviel soweit sowie sowieso sowohl spielen später startet startete starteten statt stattdessen steht steige steigen steigt stellenweise stellenweisem stellenweisen stets stieg stiegen such suchen sämtliche tages tat tatsaechlich tatsaechlichen tatsaechlicher tatsaechliches tatsächlich tatsächlichen tatsächlicher tatsächliches tausend teile teilen teilte teilten titel total trage tragen trotzdem trug trägt tun tust tut txt tät ueber ueberall ueberallhin ueberaus ueberdies ueberhaupt uebermorgen ueblicherweise uebrig uebrigens um ums umso umstaendehalber umständehalber unbedingt unbedingte unbedingter unbedingtes und unerhoert unerhoerte unerhoertem unerhoerten unerhoerter unerhoertes unerhört unerhörte unerhörtem unerhörten unerhörter unerhörtes ungefähr ungemein ungewoehnlich ungewoehnliche ungewoehnlichem ungewoehnlichen ungewoehnlicher ungewoehnliches ungewöhnlich ungewöhnliche ungewöhnlichem ungewöhnlichen ungewöhnlicher ungewöhnliches ungleich ungleiche ungleichem ungleichen ungleicher ungleiches unmassgeblich unmassgebliche unmassgeblichem unmassgeblichen unmassgeblicher unmassgebliches unmaßgeblich unmaßgebliche unmaßgeblichem unmaßgeblichen unmaßgeblicher unmaßgebliches unmoeglich unmoegliche unmoeglichem unmoeglichen unmoeglicher unmoegliches unmöglich unmögliche unmöglichen unmöglicher unnötig uns unsaeglich unsaegliche unsaeglichem unsaeglichen unsaeglicher unsaegliches unsagbar unsagbare unsagbarem unsagbaren unsagbarer unsagbares unse unsem unsen unser unsere unserem unseren unserer unseres unserm unses unsre unsrem unsren unsrer unsres unstreitig unstreitige unstreitigem unstreitigen unstreitiger unstreitiges unsäglich unsägliche unsäglichem unsäglichen unsäglicher unsägliches unten unter unterbrach unterbrechen untere unterem unteres unterhalb unterste unterster unterstes unwichtig unzweifelhaft unzweifelhafte unzweifelhaftem unzweifelhaften unzweifelhafter unzweifelhaftes usw usw. vergangen vergangene vergangener vergangenes vermag vermutlich vermutliche vermutlichem vermutlichen vermutlicher vermutliches vermögen verrate verraten verriet verrieten version versorge versorgen versorgt versorgte versorgten versorgtes veröffentlichen veröffentlicher veröffentlicht veröffentlichte veröffentlichten veröffentlichtes viel viele vielen vieler vielerlei vieles vielleicht vielmalig vielmals vier voellig voellige voelligem voelligen voelliger voelliges voelligst vollends vollstaendig vollstaendige vollstaendigem vollstaendigen vollstaendiger vollstaendiges vollständig vollständige vollständigem vollständigen vollständiger vollständiges vom von vor voran vorbei vorgestern vorher vorherig vorherige vorherigem vorheriger vorne vorueber vorüber völlig völlige völligem völligen völliger völliges völligst wachen waehrend waehrenddessen waere wann war waren warst warum was weder weg wegen weil weiter weitere weiterem weiteren weiterer weiteres weiterhin weitestgehend weitestgehende weitestgehendem weitestgehenden weitestgehender weitestgehendes weitgehend weitgehende weitgehendem weitgehenden weitgehender weitgehendes weiß welche welchem welchen welcher welches wem wen wenig wenige weniger wenigstens wenn wenngleich wer werde werden werdet weshalb wessen wichtig wie wieder wiederum wieso wieviel wieviele wievieler wiewohl will willst wir wird wirklich wirklichem wirklicher wirkliches wirst wo wobei wodurch wofuer wofür wogegen woher wohin wohingegen wohl wohlgemerkt wohlweislich wolle wollen wollt wollte wollten wolltest wolltet womit womoeglich womoegliche womoeglichem womoeglichen womoeglicher womoegliches womöglich womögliche womöglichem womöglichen womöglicher womögliches woran woraufhin woraus worin wurde wurden www würde würden während währenddessen wär wäre wären x übel über überall überallhin überaus überdies überhaupt übermorgen üblicherweise übrig übrigens z.B. zahlreich zahlreichem zahlreicher zB zb. zehn zeitweise zeitweisem zeitweisen zeitweiser ziehen zieht ziemlich ziemliche ziemlichem ziemlichen ziemlicher ziemliches zirka zog zogen zu zudem zuerst zufolge zugleich zuletzt zum zumal zumeist zumindest zunaechst zunächst zur zurueck zurück zusammen zusehends zuviel zuviele zuvieler zuweilen zwanzig zwar zwei zweifelsfrei zweifelsfreie zweifelsfreiem zweifelsfreien zweifelsfreier zweifelsfreies zwischen zwölf ähnlich ähnliche ähnlichem ähnlichen ähnlicher ähnliches ähnlichst ähnlichste ähnlichstem ähnlichsten ähnlichster ähnlichstes äusserst äusserste äusserstem äussersten äusserster äusserstes äußerst äußerste äußerstem äußersten äußerster äußerstes öfter öfters bezeichnet verschiedenen mithilfe eingeben erweiterte jeweils verschiedene verschieden öffentlich öffentliche mehrere sichtbar groß großen größer ... ].join('|') })\b/i %>
+
+<%# Get names of students to remove later from string%>
+<% authors = "" %>
+<% @document_list.each do |object| %>
+  <% doc_presenter = show_presenter(object) %>
+  <% author = doc_presenter.field_value "author" %>
+  <% authors << author %>
+<% end %>
+<% students = /\b(?:authors.join('|'))\b/i %>
+
+
+<% portfolio_stop_words = /\b(?:#{ %w[moopaed mahara zum hauptinhalt zurückspringen anzeigen menü (menü) suche alexander gantikow einstellungen nachrichteneingang: 0 abmelden nutzer/innen suchen nutzer/innen suchen dashboard, inhalt profil profilbilder dateien blogs biografie pläne notizen portfolio ansichten sammlungen freigegeben freigegeben export import gruppen meine finden meine kontakte kontakte mitgliedschaft institutionen diskussionsthemen ansicht bearbeiten kopieren mehr ... beobachtungsliste hinzufügen anstößiges material anzeigen kommentar schließen creative attribution commons schwerpunkt beispiel datei zusammenfassung commercial lizenz nachricht google details hilfe quelle kommentarellcm kommentaregrundlagen kommentaremedienlehre quot kommentarehtml quotquot html ursprüngliche verwendet anhängen derivatives kommentaremedien kommentareinformationssysteme nachrichteneingang nutzungsbedingung datenschutzerklärung bewertung kommentarebetriebssystem besitzt gespeichert bitte wählen bestätigen].join('|') })\b/i %>
+
+<% names = /\b(?:#{ %w[herr frau müller rebholz stier libbrecht].join('|') })\b/i %>
+
+
+
+<%# ............ Prepare the data (= words) ............ %>
+
+<%# Number of words shown in word cloud%>
+<% words_shown = 70 %>
+
+<%# Get all full texts from result/ document_lust %>
+<%# Append the texts to a string and remove stopwords %>
+<% text_full = "" %>
+<% @document_list.each do |object| %>
+  <% doc_presenter = show_presenter(object) %>
+  <% text = doc_presenter.field_value "text" %>
+  <% text_full << text %>
+<% end %>
+
+<%# Remove stopwords and student names and so on... %>
+<% clean_string = text_full.downcase() %>
+<% clean_string = clean_string.gsub(stop_words, '')%>
+<% clean_string = clean_string.gsub(students, '')%>
+<% clean_string = clean_string.gsub(portfolio_stop_words, '')%>
+<% clean_string = clean_string.gsub(names, '')%>
+<% clean_string = clean_string.gsub(/[^a-z äüöß]/i, " ")%>
+
+<%# splits string using space and lowercase it %>
+<% split_words = clean_string.split(' ') %>
+
+<%# iterate over the array of words %>
+<%# put each word into the hash + increment %>
+<% frequencies = Hash.new(0) %>
+<% split_words.each do |word| %>
+    <% if word.length > 3 %>
+      <% frequencies[word] +=1 %>
+    <% end %>
+<% end %>
+
+<%# sort frequencies, order, convert to array and crop %>
+<% frequencies = frequencies.sort_by {|a, b| b} %>
+<% frequencies.reverse! %>
+<% @frequencies_arr = frequencies.to_a  %>
+<% @frequencies_arr = @frequencies_arr.slice(0, words_shown)  %>
+
+<%# Get max to calcualte frequency needed by word cloud %>
+<% max = @frequencies_arr[0][1].to_i %>
+
+<%# Build new array, now containing the relevancy %>
+<% counter = 0 %>
+<% @data = Array.new()%>
+<% @frequencies_arr.each do |word, count| %>
+  <% relevancy = (count.to_f / max).round(2) %>
+  <% @data[counter] = [word, count, relevancy] %>
+  <% counter += 1 %>
+<% end %>
+
+
+<!-- ......... Start of word cloud ......... --> 
+
+<!-- Source of Word Cloud -->
+<!-- Benny Bottema uses the work of Jason Davies and expands it  -->
+<!-- https://github.com/jasondavies/d3-cloud -->
+<!-- http://www.jasondavies.com/wordcloud/ -->
+<!-- https://github.com/bbottema/d3-tag-skills-cloud -->
+<!-- http://www.bennybottema.com/2016/03/02/showcase-your-skillset-with-an-interactive-colorful-d3-js-tag-cloud/-->
+
+<!-- Form for search input -->
+<form class="form-inline">
+  <div class="form-group">
+    <!--<label for="exampleInputEmail1">Email address</label>-->
+    <input id="filter" type="text" class="form-control" placeholder="Begriff suchen" onkeyup="generateSkillCloud()">
+  </div>
+</form>
+
+<!-- Div where cloud gets appended -->
+<div id="word_cloud"></div>
+
+<script>
+
+	/* Convert ruby array to JS, 
+	iterate and build json format*/
+	var js_arr = <%= raw @data %>;
+	skills = new Array();
+	js_arr.forEach(function(element) {
+		skills.push({"name": element[0], years: element[1], "relevancy": element[2]});
+	});  
+
+	// ...........................................
+    // Get min and max value
+    var minyears = _.min(_.map(skills, 'years'));
+    var maxyears = _.max(_.map(skills, 'years'));
+
+    // Max and min font-size
+    var minfont = 28;
+    var maxfont = 50;
+
+    // Word rotation ( degree)
+    var maxrotate = 10;
+
+    // Width and height of visualization
+    var width = 800;
+    var height = 400;
+    
+    // A range of colors provided by D3
+    // bl.ocks.org/aaizemberg/78bd3dade9593896a59d
+    var fill = d3.scaleOrdinal(d3.schemeCategory20c);
+
+    // for small screens (and slow cpu's) limit retries
+    var MAX_TRIES = (width > 400) ? 6 : 3;
+
+    // draw initial cloud wilthout filters
+    generateSkillCloud();
+
+    function generateSkillCloud(retryCycle) {
+        var skillsToDraw = transformToCloudLayoutObjects(filterSkills(skills), retryCycle);
+        d3.layout.cloud()
+            .size([width, height])
+            .words(skillsToDraw)
+            .rotate(function() {
+                return (~~(Math.random() * 6) - 2.5) * maxrotate;
+            })
+            .font("Impact")
+            .fontSize(function(d) {
+                return d.size;
+            })
+            .on("end", function(fittedSkills) {
+                // check if all words fit and are included
+                if (fittedSkills.length == skillsToDraw.length) {
+                    drawSkillCloud(fittedSkills); // finished
+                }
+                else if (!retryCycle || retryCycle < MAX_TRIES) {
+                    // words are missing due to the random placement and limited room space
+                    console.debug('retrying');
+                    // try again and start counting retries
+                    generateSkillCloud((retryCycle || 1) + 1);
+                }
+                else {
+                    // retries maxed and failed to fit all the words
+                    console.debug('gave up :(');
+                    // just draw what we have
+                    drawSkillCloud(fittedSkills);
+                }
+            })
+            .start();
+
+        // filter skills based on user input and transform to
+        function filterSkills(skills) {
+            var textfilter = document.getElementById('filter').value;
+            return _.filter(skills, function(skill) {
+                return !textfilter || skill.name.toLowerCase().indexOf(textfilter.toLowerCase()) >= 0;
+            });
+        }
+
+        // convert skill objects into cloud layout objects
+        function transformToCloudLayoutObjects(skills, retryCycle) {
+            return _.map(skills, function(skill) {
+                return {
+                    text: skill.name.toLowerCase() + ':' + skill.years,
+                    size: toFontSize(skill.years, skill.relevancy, retryCycle)
+                };
+            });
+        }
+
+        /**
+         * 1. Determine font size based on years of experience relative to the skills with the least and most years of experience.
+         * 2. Further increase / decrease font size based on relevancy (linux 20y is could less relevant than java 3y, so relevancy 
+         *    .2 vs 1.5 could work for example).
+         */
+        function toFontSize(years, relevancy, retryCycle) {
+            // translate years scale to font size scale and apply relevancy factor
+            var lineairSize = (((years - minyears) / (maxyears - minyears)) * (maxfont - minfont) * relevancy) + minfont;
+            // make the difference between small sizes and bigger sizes more pronounced for effect
+            var polarizedSize = Math.pow(lineairSize / 8, 3);
+            // reduce the size as the retry cycles ramp up (due to too many words in too small space)
+            var reduceSize = polarizedSize * ((MAX_TRIES - retryCycle) / MAX_TRIES);
+            return ~~reduceSize;
+        }
+
+        var old_color = "placeholder";
+
+        function drawSkillCloud(words) {
+            d3.select("#word_cloud svg").remove();
+            d3.select("#word_cloud").append("svg")
+                .attr("width", width)
+                .attr("height", height)
+                .append("g")
+                .attr("transform", "translate(" + ~~(width / 2) + "," + ~~(height / 2) + ")")
+                .selectAll("text")
+                .data(words)
+                .enter().append("text")
+                .style("font-size", function(d) {
+                    return d.size + "px";
+                })
+                .style("-webkit-touch-callout", "none")
+                .style("-webkit-user-select", "none")
+                .style("-khtml-user-select", "none")
+                .style("-moz-user-select", "none")
+                .style("-ms-user-select", "none")
+                .style("user-select", "none")
+                .style("cursor", "default")
+                .style("font-family", "Impact")
+                .style("fill", function(d, i) {
+                    return fill(i);
+                })
+                .attr("text-anchor", "middle")
+                .attr("transform", function(d) {
+                    return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+                })
+                .text(function(d) {
+                    return d.text;
+                })
+				.on("mouseover", function(d){
+					d3.select(this).style("cursor", "pointer");
+					d3.select(this).transition()
+						.duration(100)					
+						.style('font-size', d.size + 5 + "px");
+					old_color = d3.rgb(d3.select(this).style("fill"));
+					d3.select(this).style("fill", function() {
+						return d3.rgb(d3.select(this).style("fill")).darker(1);
+					})
+				})						
+				.on("mouseout", function(d){
+					d3.select(this).style("fill", old_color);
+					d3.select(this).transition()
+						.duration(100)					
+						.style('font-size', d.size + "px");					
+				});   
+                
+            // set the viewbox to content bounding box (zooming in on the content, effectively trimming whitespace)
+            var svg = document.getElementsByTagName("svg")[0];
+            /*var bbox = svg.getBBox();
+            var viewBox = [bbox.x, bbox.y, bbox.width, bbox.height].join(" ");
+            svg.setAttribute("viewBox", viewBox);*/
+            /* bbox is commented out because of Firefox bug*/
+
+        }
+    }
+</script>

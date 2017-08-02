@@ -1,0 +1,237 @@
+<!-- TODO -->
+<!-- Portfolio text field gets loaded into DOM to submit with the form. -->
+<!-- Background: A soon as I do an update of a field, the text gets deleted. -->
+<!-- Change from Ruby/Rails to Javascript solution. Add validation -->
+<!-- Rails only can access checkmarks of current table page bec. its hiding data in the dom ?! -->
+<!-- Selection of rows is buggy when selecting text with double click -->
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.15/se-1.2.2/datatables.min.css"/>
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.15/se-1.2.2/datatables.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script>
+
+<div id="content" class="col-md-12 col-sm-12">
+
+	<!-- ALERT -->
+	<div id="alert" class="alert alert-success alert-dismissible show invisible" role="alert">
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		</button>
+		<strong>Ihre Änderungen wurden übernommen.</strong>
+		<ul>
+			<li>Geändertes Feld: <%= @field %></li>
+			<li>Neuer Inhalt: <%= @new_content %> </li>
+			<li>Felder mit folgenden IDs wurden geändert: <%= @checkmarks %></li>
+		</ul>			
+	</div>
+
+	<%
+	# Querybuilder
+	# @query comes from form submit
+	# if @query empty use *:* as default
+	query = "*:*" 
+	unless @query.to_s.strip.empty?
+	  query = @query
+	end
+
+	search_word = "*:*"
+	unless @query.to_s.strip.empty?
+		search_word = @qsearch_word
+	end
+
+	# Server is globally set in application rb
+	server = Rails.application.config.solr_server
+	solr = RSolr.connect :url => server
+	response = solr.get 'select', :params => {
+		:q=> query,
+		:fl=>['author', 'portfolio_title', 'title', 'lecture', 'cohort', 'id', 'text'],
+		:wt => :ruby,
+		:hl => false,
+		:rows => 1000
+	}
+	%>
+
+	<% unless @redirected.nil? %>
+		<script type="text/javascript">
+			$('#alert').removeClass('invisible');
+		</script>
+	<% end	%>
+
+	<div class="row">
+		<h3>Hinweis:</h3>
+		In dieser Version werden nur Änderungen der <u>aktiven Tabellenseite</u> übernommen. <br>
+		"DataTables" blendet inaktibe Seite im Doms aus, sodass Rails nach dem Submit keinen Zugriff mehr darauf hat. <br>
+		Deshalb ggf. Anzahl der gezeigten Einträge pro Seite erhöhen. <br>
+		Das Selektieren der Checkboxen und Tabellenreihen ist noch buggy - also Vorsicht.
+		Todos in sort_portfolios/index.html.erb beachten<br><br><br>
+	</div>
+
+	<!-- SEARCH PORTFOLIOS-->
+	<!-- now row used, so rails form stays on top -->
+	<div class="col-md-4 col-sm-4">
+		<div class="panel panel-default">
+			<div class="panel-heading">Ansichten suchen</div>
+			<div class="panel-body">
+				<%= form_tag({:action => "output"}, {:class => "management_form form-inline"}) do |f| %>
+				<ol>
+					<li>
+						<%= label :search_field, "Feld wählen: " %>
+						<%= select_tag :search_field, options_for_select([ "all", "author_de", "portfolio_title", "title", "lecture", "cohort", "id"], "all"), class: 'form-control' %>
+					</li>
+					<li>	
+						<%= label :search_word, "Suchbegriff: " %>
+						<%= text_field_tag :search_word, "#{search_word}", class: 'form-control' %>
+					</li>	
+					<li>
+						<%= submit_tag "Suche starten", :class=>"btn btn-default" %>
+					</li>	
+				</ol>	
+				<% end %>
+			</div>
+		</div>
+	</div>
+
+	<!-- UPDATE FIELDS -->
+	<!-- The form includes the checkmarks of the table -->
+	<%= form_tag({:action => "update"}, {:class => "management_form form-inline"}) do |f| %>
+		<div class="col-md-4 col-sm-4">
+			<div class="panel panel-default">
+				<div class="panel-heading">Felder ändern</div>
+				<div class="panel-body">
+					<ol>
+						<li>
+							<%= label :field, "Feld wählen: " %>
+							<%= select_tag :field, options_for_select([ "author", "portfolio_title", "title", "lecture", "cohort", "id"], "lecture"), class: 'form-control'%>
+						</li>
+						<li>	
+							<%= label :new_content, "Neuer Feldinhalt: " %>
+							<%= text_field_tag :new_content, "", class: 'form-control' %>
+						</li>				
+						<li>Ansicht(en) in Tabelle markieren</li>
+						<li>
+							<%= submit_tag "Änderungen speichern", :class=>"btn btn-default", data: {:confirm => "Are you sure?"} %>
+						</li>
+					</ol>
+				</div>		
+			</div>	
+		</div><!-- col -->
+
+		<div class="col-md-12 col-sm-12">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-md-4 col-sm-4">
+							<b>
+							<%= response["response"]["numFound"] %> Ansichten gefunden //
+							Aktuelle Query: <%= query %><br>
+							</b>
+						</div>
+						<div class="col-md-8 col-sm-8">
+							<div class="btn-group pull-right" role="group">
+								<button type="button" class="btn btn-default btn-sm buttons-select-all">Alles auswählen</button>
+								<button type="button" class="btn btn-default btn-sm buttons-select-none">Alles abwählen</button>
+								<button type="button" class="btn btn-default btn-sm site-select-all">Aktuelle Seite auswählen</button>
+								<button type="button" class="btn btn-default btn-sm site-select-none">Aktuelle Seite abwählen</button>
+							</div>	
+						</div>
+					</div>			
+
+					<!-- TABLE -->
+					<!-- The table is currently not a part of the formular -->
+					<table id="portfolio_table" class="table table-striped table-hover" width="100%" cellspacing="0">
+						<thead>
+							<tr>
+								<th>Check</th>
+								<th>Text</th>
+								<th>Studierender</th>
+								<th>Portfolio Titel</th>
+								<th>Titel</th>
+								<th>Kohorte</th>
+								<th>Seminar</th>
+								<th>Link</th>
+							</tr>
+						</thead>
+						<tbody>
+							<% response["response"]["docs"].each_with_index do |doc, index| %>
+								<tr>
+									<td class="check_tag"><%= check_box_tag 'index[]', "#{doc['id']}", false, class: 'select-checkbox' %></td>
+									<td><%= text_field_tag "#{doc['id'].to_s}", "#{doc['text'].to_s}", :id => "#{doc['id']}" %></td>
+									<td><%=doc["author"]%></td>
+									<td><%=doc["portfolio_title"]%></td>
+									<td><%=doc["title"]%></td>
+									<td><%=doc["cohort"]%></td>
+									<td><%=doc["lecture"]%></td>
+									<td><%=link_to "öffnen", "../catalog/#{doc['id']}"%></td>
+								</tr>
+							<% end %>
+						</tbody>
+					</table>
+				</div><!-- Panel body-->
+			</div><!-- Panel-->
+		</div><!-- col -->
+	<% end %><!-- Form -->
+</div><!-- content -->
+
+
+
+<!-- SCRIPT DataTable -->
+<script type="text/javascript">	
+	$(document).ready(function() {
+	    var table = $('#portfolio_table').DataTable( {
+			"columnDefs": [
+				{ "searchable": false, "targets": 1 }
+			],
+	    	dom: 'B<"clear">lfrtip',	
+			buttons: [
+				{ extend: 'selectAll', className: 'invisible' },
+				{ extend: 'selectNone', className: 'invisible' }
+			],
+	        select: {
+	            style: 'multi'
+	        }
+    	} );
+
+		$('#portfolio_table').on( 'click', 'tbody tr', function () {
+		    if ( table.row( this, { selected: true } ).any() ) {
+		        $(this).find('input:checkbox:first').prop('checked',false);
+		    }
+		    else {
+		        $(this).find('input:checkbox:first').prop('checked',true);
+		    }
+		} );
+
+		// Some Workarounds
+		// Datatables has the option to insert checkboxes.
+		// But for me it remained unclear, how to handle dom changes with rails.
+		// Because of that I inserted checkboxes with Rails-Form.
+		// The next code is the long approach which normally is done by DataTables automatically.
+
+		$('.site-select-none').on( 'click', function () {
+			$('tr').removeClass('selected');			
+			$('#portfolio_table input:checkbox').prop('checked',false);
+		} );
+
+		$('.site-select-all').on('click', function () {
+			table.rows('.selected').deselect();
+			$('tr').addClass('selected');
+			$('#portfolio_table input:checkbox').prop('checked',true);
+		});
+		
+		$('.buttons-select-all').on('click', function () {	
+			table.rows().select();
+	        var cols = table.column(0).nodes();	        
+	        for (var i = 0; i < cols.length; i += 1) {
+	        	cols[i].querySelector("input[type='checkbox']").checked = true;
+	        }
+		});
+
+		$('.buttons-select-none').on('click', function () {
+			table.rows().deselect();
+	        var cols = table.column(0).nodes();	        
+	        for (var i = 0; i < cols.length; i += 1) {
+	        	cols[i].querySelector("input[type='checkbox']").checked = false;
+	        }
+		});
+
+	} );
+
+</script>

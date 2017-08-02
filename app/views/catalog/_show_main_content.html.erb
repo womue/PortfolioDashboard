@@ -1,0 +1,52 @@
+<%
+# Rendering a single result
+# To change shown portfolio details of first tab see show_default.html and the rendered .erb's
+# To change the upper dom elements see show.html.erb
+%>
+
+<%#= render 'previous_next_doc' %>
+
+<!-- Page Title -->
+<% @page_title = t('blacklight.search.show.title', :document_title => document_show_html_title, :application_name => application_name).html_safe %>
+<% content_for(:head) { render_link_rel_alternates } %>
+
+
+<div>
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab"><%= t('blacklight.tabs.view')%></a></li>
+    <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab"><%= t('blacklight.tabs.visualization')%></a></li>
+    <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab"><%= t('blacklight.tabs.ressource')%></a></li>
+    <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab"><%= t('blacklight.tabs.media')%></a></li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content tab_single_portfolio">
+    <div role="tabpanel" class="tab-pane active" id="home">
+		<!-- Show Portfolio Content -->
+		<div id="document" class="document <%= render_document_class %>" itemscope  itemtype="<%= @document.itemtype %>">
+		  <div class="show_main" id="doc_<%= @document.id.to_s.parameterize %>">
+		    <%= render_document_partials @document, blacklight_config.view_config(:show).partials %>
+		  </div>
+		</div>    
+    </div>
+    <div role="tabpanel" class="tab-pane" id="profile">
+    	<%= render 'show_comparison_table' %>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="messages">
+    <%= render 'show_ressources' %>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="settings">...</div>
+  </div>
+</div>
+
+
+
+
+<!-- Activate Tabs -->
+<script>
+  $('#myTabs a').click(function (e) {
+    e.preventDefault()
+    $(this).tab('show')
+  })
+</script>

@@ -1,0 +1,97 @@
+
+
+
+     <style>
+      .legend {         
+        font-size: 12px;
+      }                 
+      rect {            
+        stroke-width: 2;
+      }                 
+    </style>
+
+    <div id="chart"></div>
+
+    <script>
+      /* http://embed.plnkr.co/gE1xQu/ */
+    
+      (function(d3) {
+        'use strict';
+
+        var dataset = [
+          { label: 'Füllwörter', count: 10 },
+          { label: 'Inhaltswörter', count: 20 }
+        ];
+
+
+        var width = 360;
+        var height = 500;
+        var radius = Math.min(width, height) / 2;
+        var donutWidth = 75;
+        var legendRectSize = 18;                                  
+        var legendSpacing = 4;                                    
+
+        var color = d3.scaleOrdinal(d3.schemeCategory20b);
+
+        var svg = d3.select('#chart')
+          .append('svg')
+          .attr('width', width)
+          .attr('height', height)
+          .append('g')
+          .attr('transform', 'translate(' + (width / 2) + 
+            ',' + (height / 2) + ')');
+
+        var arc = d3.arc()
+          .innerRadius(radius - donutWidth)
+          .outerRadius(radius);
+
+        var pie = d3.pie()
+          .value(function(d) { return d.count; })
+          .sort(null);
+
+        var path = svg.selectAll('path')
+          .data(pie(dataset))
+          .enter()
+          .append('path')
+          .attr('d', arc)
+          .attr('fill', function(d, i) { 
+            return color(d.data.label);
+          });
+
+        // the whole legend
+        var legend = svg.selectAll('.legend')                     
+          .data(color.domain())                                   
+          .enter()                                                
+          .append('g')                                            
+          .attr('class', 'legend')                                
+          .attr('transform', function(d, i) { 
+            var horz = -90 + i*100 ;    
+            var vert = 200;
+            return 'translate(' + horz + ',' + vert + ')';        
+          });                                                     
+
+        // rectangle of the legend
+        legend.append('rect')                                     
+          .attr('width', legendRectSize)                          
+          .attr('height', legendRectSize)                         
+          .style('fill', color)                                   
+          .style('stroke', color);                                
+          
+        // text of the legend
+        legend.append('text')                                     
+          .attr('x', legendRectSize + legendSpacing)              
+          .attr('y', legendRectSize - legendSpacing)              
+          .text(function(d) { return d; });
+
+      svg.append("text")
+        .attr("text-anchor", "middle")
+        .attr('font-size', '1em')
+        .attr('font-weight', 'bold')
+        .attr('y', 5)
+        .text("LD: " + totalCount);                                 
+
+      })(window.d3);
+      
+    </script>
+
+

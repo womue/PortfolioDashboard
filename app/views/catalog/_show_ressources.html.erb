@@ -1,0 +1,27 @@
+<%# This file shows the ressources and links of single document %>
+<%# Cleaning up a link with .tr should be done in analyzer %>
+
+<% doc_presenter = show_presenter(@document) %>
+<% links = doc_presenter.field_value "ExternalLinks" %>
+
+<% unless links.to_s.strip.empty? %>
+	<% links = links.split(",") %>
+	<% links[-1] = links[-1].sub!("and", "") %>
+<% end %>
+
+<%# ---- Content: lecture, date and text ---- %>
+<div class="row">
+	<div class="col-sm-12 col-md-12">
+		<h4><%= t('blacklight.results.externalLinks')%></h4>
+		<ul>
+			<% unless links.to_s.strip.empty? %>
+				<% links.each do |link|%>
+					<li><%= link_to link, link, :target => "_blank" %></li>
+				<% end %>
+			<% else %>
+				Keine Links vorhanden
+			<% end %>				
+		</ul>
+	</div>
+</div>
+

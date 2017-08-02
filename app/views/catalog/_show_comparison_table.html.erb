@@ -1,0 +1,108 @@
+<%# ---- Comparison preparation---- %>
+<% 
+require 'rsolr'
+%>
+<% doc_presenter = show_presenter(@document) %>
+
+<% lecture = doc_presenter.field_value "lecture" %>
+<% lecture_search = "lecture: \"#{lecture}\"" %>
+<% cohort = doc_presenter.field_value "cohort" %>
+<% cohort_search = "cohort: \"#{cohort}\"" %>
+
+<%# ---- LECTURE---- %>
+<%
+# Server is globally set in application rb
+server = Rails.application.config.solr_server
+solr = RSolr.connect :url => server
+response_lecture = solr.get 'select', :params => {
+	:q=> lecture_search,
+	:fl=>['nrWords', 'nrImages', 'nrUploadedImages', 'nrWikipediaImages', 'nrInstagramImages', 'nrFlickrImages', 'nrSnapchatImages', 'nrPinterestImages', 'nrExternalLinks', 'nrWikipediaLinks'],
+	:wt => :ruby,
+	:hl => false,
+	:rows => 1000
+}
+%>
+
+<% lecture_data = {:nrWords=> 0, :nrImages=> 0, :nrUploadedImages=> 0, :nrWikipediaImages=> 0, :nrInstagramImages=> 0, :nrFlickrImages=> 0, :nrSnapchatImages=> 0, :nrPinterestImages=> 0, :nrExternalLinks=> 0, :nrWikipediaLinks=> 0}%>
+<% response_lecture["response"]["docs"].each_with_index do |doc, i| %>
+	<% lecture_data[:nrWords] = lecture_data[:nrWords]+doc["nrWords"] %>
+	<% lecture_data[:nrImages] = lecture_data[:nrImages]+doc["nrImages"] %>
+	<% lecture_data[:nrUploadedImages] = lecture_data[:nrUploadedImages]+doc["nrUploadedImages"] %>
+	<% lecture_data[:nrWikipediaImages] = lecture_data[:nrWikipediaImages]+doc["nrWikipediaImages"] %>
+	<% lecture_data[:nrInstagramImages] = lecture_data[:nrWikipediaImages]+doc["nrWikipediaImages"] %>
+	<% lecture_data[:nrFlickrImages] = lecture_data[:nrWikipediaImages]+doc["nrWikipediaImages"] %>
+	<% lecture_data[:nrSnapchatImages] = lecture_data[:nrWikipediaImages]+doc["nrWikipediaImages"] %>
+	<% lecture_data[:nrPinterestImages] = lecture_data[:nrWikipediaImages]+doc["nrWikipediaImages"] %>
+	<% lecture_data[:nrExternalLinks] = lecture_data[:nrExternalLinks]+doc["nrExternalLinks"] %>
+	<% lecture_data[:nrWikipediaLinks] = lecture_data[:nrWikipediaLinks]+doc["nrWikipediaLinks"] %>
+<% end %>
+
+<% lecture_data.each do |key, value| 
+	if value !=0  
+		lecture_data[key] = value/response_lecture["response"]["numFound"] 
+	end 
+end %>
+
+
+<%# ---- COHORT---- %>
+<%
+# Server is globally set in application rb
+server = Rails.application.config.solr_server
+solr = RSolr.connect :url => server
+response_cohort = solr.get 'select', :params => {
+	:q=> cohort_search,
+	:fl=>['nrWords', 'nrImages', 'nrUploadedImages', 'nrWikipediaImages', 'nrInstagramImages', 'nrFlickrImages', 'nrSnapchatImages', 'nrPinterestImages', 'nrExternalLinks', 'nrWikipediaLinks'],
+	:wt => :ruby,
+	:hl => false,
+	:rows => 1000
+}
+%>
+
+<% cohort_data = {:nrWords=> 0, :nrImages=> 0, :nrUploadedImages=> 0, :nrWikipediaImages=> 0, :nrInstagramImages=> 0, :nrFlickrImages=> 0, :nrSnapchatImages=> 0, :nrPinterestImages=> 0, :nrExternalLinks=> 0, :nrWikipediaLinks=> 0}%>
+<% response_cohort["response"]["docs"].each_with_index do |doc, i| %>
+	<% cohort_data[:nrWords] = cohort_data[:nrWords]+doc["nrWords"] %>
+	<% cohort_data[:nrImages] = cohort_data[:nrImages]+doc["nrImages"] %>
+	<% cohort_data[:nrUploadedImages] = cohort_data[:nrUploadedImages]+doc["nrUploadedImages"] %>
+	<% cohort_data[:nrWikipediaImages] = cohort_data[:nrWikipediaImages]+doc["nrWikipediaImages"] %>
+	<% cohort_data[:nrInstagramImages] = cohort_data[:nrWikipediaImages]+doc["nrWikipediaImages"] %>
+	<% cohort_data[:nrFlickrImages] = cohort_data[:nrWikipediaImages]+doc["nrWikipediaImages"] %>
+	<% cohort_data[:nrSnapchatImages] = cohort_data[:nrWikipediaImages]+doc["nrWikipediaImages"] %>
+	<% cohort_data[:nrPinterestImages] = cohort_data[:nrWikipediaImages]+doc["nrWikipediaImages"] %>
+	<% cohort_data[:nrExternalLinks] = cohort_data[:nrExternalLinks]+doc["nrExternalLinks"] %>
+	<% cohort_data[:nrWikipediaLinks] = cohort_data[:nrWikipediaLinks]+doc["nrWikipediaLinks"] %>
+<% end %>
+
+<% cohort_data.each do |key, value| 
+	if value !=0  
+		cohort_data[key] = value/response_cohort["response"]["numFound"] 
+	end 
+end %>
+
+
+<%# ---- TABLE---- %>
+<h4>Studierender im Vergleich mit seinem Seminar und seiner Kohorte</h4>
+<table class="table table-striped">
+	<tr>
+		<th>Feld</th>
+		<th>Person: <%= doc_presenter.field_value "author" %></th>
+		<th>Seminar: <%= doc_presenter.field_value "lecture" %> &empty; / n= <%= response_lecture["response"]["numFound"]%></th>
+		<th>Kohorte <%=cohort%> &empty; / n= <%= response_cohort["response"]["numFound"]%></th>
+	</tr>
+	
+	<!-- shown fields are defined in catalog_controller.rb -->
+	<% document_show_fields(@document).each do |field_name, field| -%>
+		<tr>
+			<td class="blacklight-<%= field_name.parameterize %>"><%= render_document_show_field_label @document, field: field_name %></td>
+			<td class="blacklight-<%= field_name.parameterize %>"><%= doc_presenter.field_value field_name %></td>
+			<td><%= lecture_data[field_name.to_sym] %></td>
+			<td><%= cohort_data[field_name.to_sym] %></td>
+		</tr>
+	<% end -%>
+</table>
+Weitere Felder Todo: Videos, Ressourcen, Lexikal, Dichte
+
+
+
+
+
+

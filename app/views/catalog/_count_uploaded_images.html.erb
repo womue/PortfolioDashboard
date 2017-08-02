@@ -1,0 +1,13 @@
+<% # Explanation: -%>
+
+<% nrUploadedImages = 0 -%>
+
+<% @response.documents.each do |object| -%>
+	<% doc_presenter = index_presenter(object) %>
+	<% nrUploadedImages += (doc_presenter.field_value "nrUploadedImages").to_i -%>
+<% end -%>
+
+Up-Bilder gesamt:
+<%= nrUploadedImages %>
+
+

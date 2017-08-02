@@ -1,0 +1,53 @@
+
+<% 
+# Explanation: 
+# Sum up the values coming from solr response
+# Because not all values get delivered by solr some fake values are generated
+# TODO: Replace the fakes with the values of solr fields
+-%>
+<% nrWords = 0 -%>
+<% nrImages = 0 -%>
+<% nrUploadedImages = 0 -%>
+<% nrUploadedImages = 0 -%>
+<% fake_counter = 0 -%>
+
+<% @response.documents.each do |object| -%>
+	<% doc_presenter = index_presenter(object) %>
+	<% nrWords += (doc_presenter.field_value "nrWords").to_i -%>
+	<% nrImages += (doc_presenter.field_value "nrImages").to_i -%>
+	<% nrUploadedImages += (doc_presenter.field_value "nrUploadedImages").to_i -%>
+	<% fake_counter += 1 -%>
+<% end -%>
+
+<% lexicalDensity = (fake_counter*6).to_i -%>
+<% nrVideos = (fake_counter*1.5).to_i -%>
+<% nrFiles = (fake_counter*3) -%>
+<% nrLinks = (fake_counter*5) -%>
+
+
+<div class="row calculation">
+	<div class="col-sm-2 col-md-2">
+		<p class="calculation_title">Wörter</p>
+		<div class="calculation_number"><%= nrWords %></div>
+	</div>
+	<div class="col-sm3-2 col-md-2">
+		<p class="calculation_title">Lexikalische Dichte</p>
+		<div class="calculation_number"><%= lexicalDensity %></div>
+	</div>		
+	<div class="col-sm3-2 col-md-2">
+		<p class="calculation_title">Bilder</p>
+		<div class="calculation_number"><%= nrImages %></div>
+	</div>
+	<div class="col-sm3-2 col-md-2">
+		<p class="calculation_title">Videos</p>
+		<div class="calculation_number"><%= nrVideos %></div>
+	</div>
+	<div class="col-sm3-2 col-md-2">
+		<p class="calculation_title">Dateien</p>
+		<div class="calculation_number"><%= nrFiles %></div>
+	</div>	
+	<div class="col-sm3-2 col-md-2">
+		<p class="calculation_title">Verlinkungen</p>
+		<div class="calculation_number"><%= nrLinks %></div>
+	</div>				
+</div>  

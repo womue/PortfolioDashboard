@@ -1,0 +1,16 @@
+<%= render 'did_you_mean' %>
+
+<div id="search_header">
+	<div class="row">
+		<div class="col-sm-6 col-md-6">
+			<div class="results_found"><%= @response.total %> <%= t('blacklight.search.hit_count')%></div>
+			<%= render 'constraints' %>
+		</div>
+		<div class="col-sm-6 col-md-6">
+			<%= render 'sort_and_per_page' %>
+		</div>
+	</div>
+</div>
+
+
+

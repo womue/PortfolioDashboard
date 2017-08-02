@@ -1,0 +1,16 @@
+Pictures
+--------
+Profile Placeholder	http://asegrad.tufts.edu/sites/default/files/ProfilePlaceholder.jpg
+
+
+Icons
+-------
+nrWords 		https://www.iconfinder.com/icons/536278/color_office_text_tool_icon#size=16
+nrImages		https://www.iconfinder.com/icons/1564523/gallery_image_photo_pic_picture_icon#size=512
+nrLinks			https://www.iconfinder.com/icons/678136/circle_link_network_sharing_icon#size=128
+nrUploadedImages	https://www.iconfinder.com/icons/678133/arrow_file_up_upload_icon#size=16
+nrRessources		https://www.iconfinder.com/icons/118726/book_icon#size=512  placed before nrLinks
+Mahara			https://pbs.twimg.com/profile_images/818640969683697664/vnXZ7bsa.jpg
+Checkmark		https://www.iconfinder.com/icons/211644/checkmark_icon#size=512
+Cancel			https://www.iconfinder.com/icons/216128/cancel_icon#size=512
+lexicalDensity		selfmade

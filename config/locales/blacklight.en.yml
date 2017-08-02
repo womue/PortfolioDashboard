@@ -1,0 +1,266 @@
+#TODO get in english text again and put german in seperate file
+# Example: Use in code with <%= t('blacklight.bookmarks.need_login')%>
+en:
+
+  views:
+    pagination:
+      first: '&laquo; Erste'
+      last: 'Letzte &raquo;'
+      previous: '&laquo; Vorherige'
+      next: 'Nächste &raquo;'
+      truncate: '…'
+
+    pagination_compact:
+      previous: '&laquo; Vorherige'
+      next: 'Nächste &raquo;'
+
+  blacklight:
+    tabs:
+      view: 'Ansicht'
+      views: 'Ansichten'
+      visualization: 'Auswertung'
+      ressource: 'Quellen'
+      media: 'Medien'
+
+    application_name: 'Portfolio-Dashboard'
+
+    # Added for Portfolio Extractor
+    results:
+      portfolio_title: 'Portfolio: '
+      title: 'Ansicht: '
+      lecture: 'Seminar: '
+      last_modified: 'Zuletzt geändert: '
+      professor: 'Prüfer: '
+      text: 'Text: '
+      author: 'Autor: '
+      nrWords: 'Wörter: '
+      contentWords: 'Inhaltswörter: '
+      fillWords: 'Füllwörter: '
+      lexicalDensity: 'Lexikalische Dichte: '
+      nrImages: 'Bilder: '
+      nrUploadedImages: 'Hochgelad. Bilder: '
+      nrLinks: 'Verlinkungen: '
+      nrExternalLinks: 'Externe Links: '
+      externalLinks: 'Externe Links: '
+      nrRessources: 'Quellen: '
+
+    header_links:
+      login: 'Anmelden'
+      logout: 'Abmelden'
+      bookmarks: 'Lesezeichen'
+      saved_searches: 'Gespeicherte Suchen'
+      search_history: 'Suchverlauf'
+
+    welcome: 'Wilkommen!'
+    and: 'und'
+    or: 'oder'
+
+    bookmarks:
+      title: 'Lesezeichen'
+      page_title: 'Lesezeichen - %{application_name}'
+      no_bookmarks: 'Sie haben noch keine Lesezeichen'
+      add:
+        button: 'Lesezeichen'
+        success:
+          one: 'Lesezeichen erfolgreich hinzugefügt.'
+          other: 'Lesezeichen erfolgreich hinzugefügt.'
+        failure:  'Entschuldigung, es gab ein Problem beim Speichern der Lesezeichen.'
+      remove:
+        button: 'Lesezeichen entfernen'
+        success: 'Lesezeichen erfolgreich gelöscht.'
+        failure: 'Entschuldigung, es gab ein Problem beim Löschen der Lesezeichen.'
+        action_confirm: 'Möchten Sie dieses Lesezeichen entfernen?'
+      clear:
+        action_title: 'Lesezeichen löschen'
+        action_confirm: 'Löschen deine Lesezeichen?'
+        success: 'Deine Lesezeichen wurden erfolgreich gelöscht.'
+        failure: 'Entschuldigung, es gab ein Problem beim löschen von Lesezeichen.'
+      need_login: 'Bitte melden Sie sich an, um Ihre Lesezeichen zu verwalten und anzusehen.'
+      list_title: 'Deine Lesezeichen'
+      delete: 'Löschen'
+
+    saved_searches:
+      add:
+        success: 'Suche erfolgreich gespeichert.'
+        failure: 'Es gab ein Problem beim Speichern der Lesezeichen.'
+      remove:
+        success: 'Suche erfolgreich gelöscht.'
+        failure: 'Es gab ein Problem beim Löschen der Lesezeichen.'
+      clear:
+        action_title: 'Löschen gespeicherte Suchen'
+        action_confirm: 'Löschen dein gespeicherte Suchen?'
+        success: 'Dein gespeicherte Suchen gab gelöscht.'
+        failure: 'Es gab ein Problem beim löschen von Suchen.'
+      title: 'Gespeicherte Suchen'
+      page_title: 'Gespeicherte Suchen - %{application_name}'
+      need_login: 'Bitte melden Sie sich an, um dein gespeicherte Suchen anschauen und wervalten.'
+      no_searches: 'Sie haben keine gespeicherte Suchen'
+      list_title: 'Dein gespeicherte Suchen'
+      delete: 'Löschen'
+
+    search_history:
+      clear:
+        action_title: 'Suchverlauf löschen'
+        action_confirm: 'Suchverlauf löschen?'
+        success: 'Suchverlauf gelöscht.'
+        failure: 'Es gab ein Problem beim Löschen des Suchverlaufs.'
+      title: 'Suchverlauf'
+      page_title: 'Suchverlauf - %{application_name}'
+      no_history: 'Sie haben noch keinen Suchverlauf'
+      recent: 'Deine aktuellen Suchen'
+      forget: 'vergessen'
+      save: 'speichern'
+
+    tools:
+      title: 'Werkzeuge'
+      cite: 'Zitieren'
+      email: 'E-Mail senden'
+      not_assessed: 'Als unbewertet kennzeichnen (Todo)'
+      assessed: 'Als bewertet kennzeichnen (Todo)'
+      sms: 'Sms senden'
+      delete: 'Datensatz löschen (Todo)'
+      mahara: 'In Mahara öffnen'
+      clear: 'Löschen'
+
+    citation:
+      mla: 'MLA'
+      apa: 'APA'
+      chicago: 'Chicago'
+
+    email:
+      form:
+        title: 'Email dieses'
+        to: 'Email:'
+        message: 'Meldung:'
+        submit: 'Abgeben'
+      text:
+        default_title: 'N/A'
+        title: 'Titel: %{value}'
+        author: 'Autor: %{value}'
+        format: 'Format: %{value}'
+        language: 'Sprache: %{value}'
+        subject:
+          one: 'Artikeldatensatz: %{title}'
+          other: 'Artikeldatensätze'
+        url: 'URL: %{url}'
+        message: 'Mitteilung: %{message}'
+
+      success: "Email Verschickt"
+
+      errors:
+        to:
+          invalid: 'Sie müssen ein gültige E-Mail-Addresse eingeben'
+          blank: 'Sie müssen ein Empfänger eingeben, um dieses Mitteilung schicken'
+    sms:
+      form:
+        title: 'SMS dieses'
+        to: 'Telefonnummer:'
+        carrier: 'Netzbetrieber'
+        carrier_prompt: 'Bitte auswählen dein Netzbetrieber'
+        submit: 'Schicken'
+      text:
+        title: '%{value}'
+        author: ' von %{value}'
+        url: 'Link: %{url}'
+      success: "SMS Verschicht"
+      errors:
+        to:
+          invalid: 'Sie müssen ein gültig 10 Stelle Telefonnummer wählen'
+          blank: "Sie müssen die Telefonnummer eines Empfängers eingeben, um dieses Mitteilung schicken"
+        carrier:
+          blank: 'Sie müssen ein Netzbetrieber wählen'
+          invalid: "Sie müssen ein gültig Netzbetrieber wählen"
+
+    back_to_search: 'Zurück zur Ergebnisliste'
+    back_to_bookmarks: 'Zurück zu den Lesezeichen'
+
+    search:
+      # i18n key 'title' is deprecated and will be removed in Blacklight 6.0
+      title: '%{application_name} Suchergebnisse'
+      hit_count: Ansichten gefunden
+      page_title:
+        title: '%{constraints} - %{application_name} Suchergebnisse'
+        constraint: '%{label}: %{value}'
+        many_constraint_values: '%{values} ausgewählt'
+      search_results_header: 'Suche'
+      search_results: 'Suchergebnisse'
+      errors:
+        request_error: "Entschuldigung, Ich habe Ihre Suche nicht verstanden."
+        invalid_solr_id: "Entschuldigung, Sie einen nicht vorhandenen Datensatz angefordert haben."
+      per_page:
+        label: '%{count}<span class="sr-only"> pro Seite</span>'
+        button_label: '%{count} pro Seite'
+        title: 'Anzahl der Ergebnisse pro Seite angezeigt werden'
+        submit: 'Aktualisieren'
+      sort:
+        label: 'Sortierung: %{field}'
+        submit: 'Ergebnisse ordnen'
+      form:
+        search_field:
+          label: 'Suchen in'
+          title: 'Gezielte Suchoptionen'
+          post_label: 'für'
+        search:
+          label: 'suchen nach'
+          placeholder: 'Suche...'
+        submit: 'Suche'
+      pagination:
+        title: 'Ergebnisse Navigation'
+      pagination_info:
+        no_items_found: 'Keine %{entry_name} gefunden'
+        single_item_found: '<strong>1</strong> %{entry_name} gefunden'
+        pages:
+          one: '<strong>%{start_num}</strong> - <strong>%{end_num}</strong> von <strong>%{total_num}</strong>'
+          other: '<strong>%{start_num}</strong> - <strong>%{end_num}</strong> von <strong>%{total_num}</strong>'
+      entry_pagination_info:
+        one: '<strong>1 von 1</strong>'
+        other: '<strong>%{current}</strong> von <strong>%{total}</strong>'
+      documents:
+        counter: '%{counter}. '
+      facets:
+        title: 'Ergebnisse filtern'
+        clear: 'Löschen'
+        sort:
+          count: 'Numerisch ordnen'
+          index: 'A-Z Ordnen'
+        count: '%{number}'
+        more_html: 'mehr <span class="sr-only">%{field_name}</span> »'
+        selected:
+          remove: '[entfernen]'
+      group:
+        more: 'mehr »'
+      filters:
+        title: 'in:'
+        label: '%{label}:'
+        remove:
+          value: 'Filter entfernen %{value}'
+          label_value: 'Filter entfernen %{label}: %{value}'
+      start_over: 'Alle zurücksetzen'
+      index:
+        label: '%{label}:'
+      show:
+        title: '%{document_title} - %{application_name}'
+        label: '%{label}:'
+      rss_feed: 'RSS für Ergebnisse'
+      atom_feed: 'Atom für Ergebnisse'
+      fields:
+        default: 'Stichwort'
+      bookmarks:
+        present: "Im Lesezeichen"
+        absent: "Lesezeichen"
+        inprogress: "Speichern..."
+      zero_results:
+        title: "Entschuldigung – Wir konnten keine übereinstimmenden Ansichten finden."
+        modify_search: "Probieren Sie Folgendes..."
+        use_fewer_keywords: "Vergewissern Sie sich, dass alle Wörter richtig geschrieben sind // Versuchen Sie unterschiedliche Suchbegriffe // Versuchen Sie allgemeinere Suchbegriffe // Lassen Sie sich auch Ergebnisse ohne Zugangsberechtigung anzeigen // Entfernen Sie einige oder alle Ihrer Suchfilter
+Versuchen Sie eine Platzhalter-Suche (Wildcard Search) --> Todo: Replace with <li> --> Text Source: link.springer.com "
+        search_fields: "Sie haben bei %{search_fields} gesucht"
+        search_everything: "Suchen Sie von allem"
+      view_title: "Ergebnisse anschauen als: "
+      view:
+        list: "Liste"
+
+    entry_name:
+      default: 'Eintrag'
+
+    did_you_mean: 'Meinten Sie: %{options}?'

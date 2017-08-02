@@ -1,0 +1,107 @@
+<%
+# Explanation: 
+# This file lists all results. It provides a tab navigation to see visualizations, ressources and media
+%>
+
+
+<h2 class="sr-only top-content-title"><%= t('blacklight.search.search_results_header') %></h2>
+
+<% @page_title = t('blacklight.search.page_title.title', :constraints => render_search_to_page_title(params), :application_name => application_name) %>
+
+<% content_for(:head) do -%>
+  <%= render_opensearch_response_metadata %>
+  <%= rss_feed_link_tag %>
+  <%= atom_feed_link_tag %>
+<% end %>
+
+<%= render 'search_header' %>
+<h2 class="sr-only"><%= t('blacklight.search.search_results') %></h2>
+
+
+<div>
+  <!-- Bootstrap Tab Navigation -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#portfolio" aria-controls="portfolio" role="tab" data-toggle="tab"><%= t('blacklight.tabs.views')%></a></li>
+    <li role="presentation"><a href="#visualization" aria-controls="visualization" role="tab" data-toggle="tab"><%= t('blacklight.tabs.visualization')%></a></li>
+    <li role="presentation"><a href="#ressource" aria-controls="ressource" role="tab" data-toggle="tab"><%= t('blacklight.tabs.ressource')%></a></li>
+    <li role="presentation"><a href="#media" aria-controls="media" role="tab" data-toggle="tab"><%= t('blacklight.tabs.media')%></a></li>
+  </ul>
+
+  <!-- Bootstrap Tabs -->
+  <div class="tab-content">
+
+    <!-- Tab: List all results -->
+    <div role="tabpanel" class="tab-pane active" id="portfolio">
+      <%- if @response.empty? %>
+      <%= render "zero_results" %>
+      <%- elsif render_grouped_response? %>
+      <%= render_grouped_document_index %>
+      <%- else %>
+      <%= render_document_index %>
+      <%- end %>    
+      <%= render 'results_pagination' %>
+    </div>
+
+    <!-- Tab: Visualizations/ Caluculations -->    
+    <div role="tabpanel" class="tab-pane" id="visualization">
+      <% if @response.total != 0 %>
+        <%= render 'visualization_tooltip' %>
+        <div class="row visualization_line">
+          <div class="col-sm-12 col-md-12">
+            <h5>Letzte Änderungen im Zeitverlauf (IndexDate benutzt, da LastModified n/a) </h5>
+            <%= render 'histogram' %>
+          </div>
+        </div>
+
+        <div class="row visualization_line">
+          <div class="col-sm-4 col-md-4">
+            <h5>Wortanzahl (TODOS)</h5>
+            <%= render 'donut_word' %>
+            Das Kreisinnere stimmt. <br>
+            Das Äußere sind Fakes
+          </div>
+          <div class="col-sm-4 col-md-4">
+            <h5>Häufigste Verlinkungen (Fake)</h5>
+            <%= render 'donut_link' %>        
+          </div>  
+          <div class="col-sm-4 col-md-4">
+            <h5>Medienverteilung</h5>
+            <%= render 'donut_media' %>
+          </div>                       
+        </div>
+
+        <div class="row">
+          <div class="col-sm-12 col-md-12">
+            <h5>Zentrale Begriffe</h5>
+            <%= render 'word_cloud' %>
+          </div>                       
+        </div>
+      <% end %>
+    </div>
+
+    <!-- Tab: Ressources -->   
+    <div role="tabpanel" class="tab-pane" id="ressource">
+      <h3 class="index_title document-title-heading col-md-12">Wissenschaftliche Quellen (Todo)</h3>
+      <%= render 'wissenschaftliche_quellen' %>
+      <h3 class="index_title document-title-heading col-md-12">Verlinkungen (Bug im Analyzer)</h3>
+      <%= render 'verlinkungen' %>
+    </div>  
+
+    <!-- Tab: Media list -->   
+    <div role="tabpanel" class="tab-pane" id="media">
+      <h3 class="index_title document-title-heading col-md-12">Medien (TODO)</h3>
+      <!--<img src="/result/media.png" alt="student-placeholder" style="width: 96.5%; margin-left: 15px; margin-top: 5px; margin-bottom: 25px;" />-->
+    </div>
+
+  </div>
+</div>
+
+
+<!-- Activate Tabs -->
+<script>
+  $('#myTabs a').click(function (e) {
+    e.preventDefault()
+    $(this).tab('show')
+  })
+</script>
+

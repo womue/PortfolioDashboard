@@ -1,0 +1,19 @@
+<table class="table table-hover quellen">
+	<% links = Array.new() %>
+	<% @response.documents.each do |object| -%>
+		<% doc_presenter = index_presenter(object) %>
+		<% links = doc_presenter.field_value "externalLinks" %>
+			<% unless links.to_s.strip.empty? %>
+				<% links = links.split(",") %>
+				<% links.each do |link| %>
+					<tr><td><%=link%></td></tr>
+				<% end %>
+			<% end %>
+	<% end -%>
+</table>
+
+
+<%# unless links.to_s.strip.empty? %>
+	<%# links = links.split(",") %>
+	<%# links[-1] = links[-1].sub!("and", "") %>
+<%# end %>

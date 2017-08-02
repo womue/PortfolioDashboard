@@ -1,0 +1,332 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ 
+ *= require 'blacklight_advanced_search'
+
+*/
+
+	body {
+		background-color: #f5f5f5;
+	}
+
+	h5 {
+		font-size: 14px;
+		margin-top: 23px;
+	}
+
+	h4 {
+		font-size: 16px;
+		margin-bottom: 10px;
+		margin-top: 20px;
+	}	
+
+	/* -------- STYLES FOR RESULT LIST --------*/
+	
+	.result_sub {
+		font-size: 12px;
+		font-weight: bold;
+	}
+
+	.document p {
+		font-size: 13px;
+		margin: 15px 0 20px;
+	}
+
+	.document h3 {
+		margin-bottom: 15px !important;
+	}	
+
+	.student-placeholder {
+		border-radius: 50%;
+		margin-left: 7px;
+		margin-top: 5px;
+		text-align: center;
+		width: 114%;
+	}
+
+	.nrWords, .nrImages, .nrLinks, .lexicalDensity, .nrUploadedImages, .nrRessources, .mahara_link, .assessed_true, .assessed_false {
+		display: block;
+		font-size: 12px;
+		margin-bottom: 5px;
+	}
+
+	.nrWords::before, .nrImages::before, .nrLinks::before, .lexicalDensity::before, .nrUploadedImages::before, .nrRessources::before, .mahara_link::before, .assessed_true::before, .assessed_false::before {
+		display: inline-block;
+		margin: 0 6px -3px 0;
+		opacity: 0.58;
+		vertical-align: bottom;
+	}
+
+	.nrWords::before {
+		content: url(/result/nrWords.png);
+	}
+
+	.nrImages::before {
+		content: url(/result/nrImages.png);
+	}
+
+	.nrLinks::before {
+		content: url(/result/nrLinks.png);
+	}
+
+	.lexicalDensity::before {
+		content: url(/result/lexicalDensity.png);
+	}
+
+	.nrUploadedImages::before {
+		content: url(/result/nrUploadedImages.png);
+	}
+
+	.nrRessources::before {
+		content: url(/result/nrRessources.png);
+	}
+
+	.mahara_link::before {
+		content: url(/result/mahara_link.png);
+	}
+
+	.assessed_true::before {
+		content: url(/result/assessed_true.png);
+	}
+
+	.assessed_false::before {
+		content: url(/result/assessed_false.png);
+	}	
+
+	/* -------- STYLES FOR A SINGLE RESULT --------*/	
+
+	.show_main h1 {
+		font-size: 16px;
+		font-weight: bold;
+		margin-bottom: 20px;
+	}
+
+	/* -------- STYLES FOR PORTFOLIO MANAGEMENT (update, delete) --------*/	
+	
+	.dataTables_wrapper {
+		margin: 30px 0px;
+	}
+
+	.check_tag {
+		text-align: center;
+	}
+
+	.check_tag input[type="checkbox"] {
+		border-radius: 3px;
+	}
+
+	input[type=checkbox] {
+		border-radius: 3px;
+	}
+
+	.management_form label {
+		font-weight: normal;
+	}
+
+	.invisible {
+		display: none;
+	}
+
+
+	
+
+	/* -------- OVERWRITE BLACKLIGHT CSS --------*/
+
+	/* List of results */
+	.documents-list {
+		padding: 0px 15px;
+	}
+
+	/* Last result won't get border*/
+	#documents .document:last-child {
+		border: none;
+	}
+
+	.show-document {
+		background-color: white;
+		border: 1px solid #ddd;
+		border-radius: 4px;
+	}		
+
+	#appliedParams {
+		background-color: white;
+	}
+
+	#search_header {
+		background-color: white;
+		border-radius: 4px;
+		border: 1px solid #ddd;
+		margin-bottom: 20px;
+		padding: 12px 15px 7px;
+		width: 100%;
+	}
+
+	.results_found {
+		font-size: 14px;
+		font-weight: bold;
+	}
+
+	.constraints-label {
+		font-size: 12px !important;
+	}
+
+	.sort_and_per_page {
+		margin-top: 5px;
+	}
+
+	.search-widgets {
+		float: left;
+	}
+
+	.download_button {
+		margin-left: 3px;
+	}
+
+	/* -------- OVERWRITE BOOTSTRAP CSS -------- */
+	/* Bootstrap Tabs */
+	.nav-tabs {
+	    border-bottom: none;
+	    margin-bottom: 1px;
+	}
+
+	.tab-content {
+		background-color: white;
+		border: 1px solid #ddd;
+		min-height: 350px;
+		padding: 0px 15px;
+	}
+
+	.tab_single_portfolio {
+		padding: 5px 30px;
+	}
+
+	.tab-pane table {
+		font-size: 12px;
+	}
+
+	/*.tab-pane h3 {
+		font-size: 14px;
+	}*/
+
+	.quellen {
+		font-size: 12px;
+		margin: 15px;		
+	}
+
+	/* Overwrite filter buttons */
+	/* These buttons show inline filters in search header */
+	.glyphicon_constraints {
+		padding: 3px 8px 0 1px !important;
+	}
+
+	.button_constraints {
+		padding: 3px 2px;
+	}
+
+	.reset_filter {
+		font-size: 12px !important;
+		padding: 0px !important
+	}	
+
+	/* After every visualization row a line appears*/
+	.visualization_line::after {
+	    border-bottom: 1px dotted #ddd;
+	    display: block;
+	    margin: 0px 15px;
+	    padding-top: 15px;
+	}
+
+
+	/* -------- D3 STYLES ---------------- */
+	/* Line Chart */
+	.bar rect {
+		fill: steelblue;
+	}
+
+	.bar text {
+		fill: #fff;
+		font: 10px sans-serif;
+	}
+
+	/* Tooltip */
+	/* Used for histogram and donut-chart*/
+	.d3_tooltip {
+	    background: none repeat scroll 0 0 white;
+	    border: 0 none;
+	    border-radius: 8px 8px 8px 8px;
+	    box-shadow: -2px 2px 8px #aaa;
+		color: black;
+	    font: 12px sans-serif;
+	    height: auto;
+	    padding: 6px 12px;
+	    position: absolute;
+	    text-align: center;
+	    width: auto;
+	}    
+
+	.d3_tooltip span {
+		display: block;
+		text-align: center;
+		width: 200px;
+		height: auto;
+		margin: 5px auto;
+	  }
+
+	/*  
+	.donut_word, .donut_media, .donut_link {
+		margin: auto;
+		width: 95%;
+	} */
+
+	.donut_legend {
+	    font-size: 13px;
+	}	
+
+	.donut_inner {
+	    font-size: 1.4em;
+	    text-anchor: middle;
+	}		
+
+	#word_cloud {
+		margin-bottom: 15px;
+	}  
+
+
+
+
+	.calculation {
+		background-color: #f5f5f5;
+		border-radius: 10px;
+		margin-top: 20px;
+		padding: 10px 5px;		
+		text-align: center;
+	}
+
+	.calculation_title {
+		font-size: 0.85em;
+	}
+
+	.calculation_title::after {
+		border-bottom: 1px solid #ddd;
+		content: " ";
+		left: 10%;
+		position: absolute;
+		top: 21px;
+		width: 80%;
+	}
+
+	.calculation_number {
+		font-weight: bold;
+	}	

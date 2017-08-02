@@ -1,0 +1,75 @@
+<%
+# Explanation: 
+# This file renders each result (its body) for the whole result list
+# For changing the result headline see _index_header_default.html.erb 
+# Attention: Thils file contains fake data because solr is not delivering them
+%>
+
+<% doc_presenter = index_presenter(document) %>
+
+<% assessed = [true, false].sample %> <%# Fake %>
+<% d = DateTime.parse(doc_presenter.field_value "indexDate") %>
+<% last_modified = d.strftime('%d.%m.%Y').to_s + " um " + d.strftime('%I:%M').to_s + " (= IndexDate!!)" %>
+
+
+<%# default partial to display solr document fields in catalog index view -%>
+<dl class="document-metadata dl-horizontal dl-invert">
+
+	<%# ---- Content: lecture, date and text ---- %>
+	<div class="row">
+		<div class="col-sm-1 col-md-1">
+			<img src="/result/student-placeholder.png" alt="student-placeholder" class="student-placeholder" />
+		</div>
+		<div class="col-sm-11 col-md-11">
+			<div class="result_sub"><%= t('blacklight.results.author')%><%= doc_presenter.field_value "author" %></div>
+			<div class="result_sub"><%= t('blacklight.results.lecture')%><%= doc_presenter.field_value "lecture" %></div>
+			<div class="result_sub"><%= t('blacklight.results.last_modified')%><%= last_modified %></div>
+			<p><%= doc_presenter.field_value "text" %><%= link_to " ... weiterlesen", "/catalog/#{doc_presenter.field_value 'id'}"%></p>
+    			
+
+	<%# ---- Calculations and qunatitative values ---- %>
+	<div class="row">
+		<div class="col-sm-3 col-md-3">
+			<span class="nrWords"><%= t('blacklight.results.nrWords')%><%= doc_presenter.field_value "nrWords" %></span>
+		</div>
+		<div class="col-sm-3 col-md-3">
+			<span class="nrImages"><%= t('blacklight.results.nrImages')%><%= doc_presenter.field_value "nrImages" %></span>
+		</div>
+		<div class="col-sm-3 col-md-3">
+			<span class="nrLinks"><%= t('blacklight.results.nrExternalLinks')%><%= doc_presenter.field_value "nrExternalLinks" %></span>
+		</div>
+		<div class="col-sm-3 col-md-3">
+			<span class="mahara_link"><%= link_to t('blacklight.tools.mahara'), "#{doc_presenter.field_value 'url'}", :target => '_blank' %></span>
+		</div>
+	</div><!-- row -->
+
+	<div class="row">	
+		<div class="col-sm-3 col-md-3">
+			<span class="lexicalDensity"><%= t('blacklight.results.lexicalDensity')%>?</span>
+		</div>
+		<div class="col-sm-3 col-md-3">
+			<%# Nr Uploaded Images ist immer -2 zu nrImages ---- %>
+			<span class="nrUploadedImages"><%= t('blacklight.results.nrUploadedImages')%><%= doc_presenter.field_value "nrUploadedImages" %></span>
+		</div>
+		<div class="col-sm-3 col-md-3">
+			<span class="nrRessources"><%= t('blacklight.results.nrRessources')%>?</span>
+		</div>
+
+		<div class="col-sm-3 col-md-3">
+			<% if assessed == true %>
+				<span class="assessed_true text-success">bewertet (fake)</span>
+			<% else %>
+				<span class="assessed_false text-danger">nicht bewertet (fake)</span>
+			<% end %>
+		</div>
+	</div><!-- row -->
+			
+		</div>
+	</div>
+
+</dl>
+
+
+
+
+

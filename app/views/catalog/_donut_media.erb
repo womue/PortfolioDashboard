@@ -1,0 +1,159 @@
+<% 
+# Explanation: 
+# TODO: Transfwe local CSS into application.css
+# TODO: Transfer local CSS into application.css
+-%>
+
+<%# Initialize count variables%>
+<% sum_nrimages = 0 %>
+<% sum_nrvideos = 0 %>
+<% sum_nrfiles = 0 %>
+
+<% @response.documents.each do |object| -%>
+  <% doc_presenter = index_presenter(object) %>
+  <% sum_nrimages = sum_nrimages + (doc_presenter.field_value "nrImages").to_i %>
+  <%# sum_nrvideos = sum_nrvideos + (doc_presenter.field_value "nrImages").to_i %>
+  <%# sum_nrfiles = sum_nrfiles + (doc_presenter.field_value "nrImages").to_i %>
+<% end -%>
+
+<!-- Source of Donut Chart: farazshuja @ https://bl.ocks.org -->
+<!-- https://bl.ocks.org/farazshuja/afd5e5f492fd00dd0ac4644d53716f4e -->
+<!-- LICENSE Released under the GNU General Public License, version 3. -->
+
+<!-- Div where donut chart gets appended -->
+<div class="donut_media"></div>
+
+<script>
+
+    // Use value of ruby variables in JS
+    var sum_nrimages = <%= sum_nrimages %>;
+    var sum_nrvideos = <%= sum_nrvideos %>;
+    var sum_nrfiles = <%= sum_nrfiles %>;
+
+    // Value of inner circle: Count all media elements
+    var sum_media = sum_nrimages + sum_nrvideos + sum_nrfiles;
+
+    var data = [
+      {name: 'Bilder', count: sum_nrimages, percentage: sum_nrimages, color: '#71A7C7'},
+      {name: 'Videos (n/a)', count: sum_nrvideos, percentage: sum_nrvideos, color: '#4284B3'},
+      {name: 'Dateien (n/a)', count: sum_nrfiles, percentage: sum_nrfiles, color: '#9ABDD0'}
+    ]; //See http://bl.ocks.org/aaizemberg/78bd3dade9593896a59d
+
+    var width = 260, height = 150, radius = 74;
+    var legend_left = 84; // margin left from center
+    var inner_top = 7; // margin left for inner value    
+    var color_reminder = "steelblue";
+
+    var arc = d3.arc()
+      .outerRadius(radius - 10)
+      .innerRadius(36);
+
+    var pie = d3.pie()
+      .sort(null)
+      .value(function(d) {
+          return d.count;
+      });
+
+    var svg = d3.select('.donut_media').append("svg")
+      .attr("width", width)
+      .attr("height", height)
+      .append("g")
+      .attr("transform", "translate(" + (width / 3-10) + "," + height / 2 + ")");
+
+    var g = svg.selectAll(".arc")
+      .data(pie(data))
+      .enter().append("g");    
+
+    // creating 'pieces' of the chart
+    // and mouse interactions
+    g.append("path")
+      .attr("d", arc)
+      .style("fill", function(d,i) {
+        return d.data.color;
+      })
+      .on("mouseover", function(d){
+          color_reminder = d3.rgb(d3.select(this).style("fill"));
+          d3.select(this)
+            .style("fill", function() {
+              return d3.rgb(d3.select(this).style("fill")).darker(0.2);
+            });
+          tooltip.text(d.data.name + ": " + d.data.count);
+          d3.select(this).style("cursor", "pointer");
+          return tooltip.style("visibility", "visible");
+      })
+    .on("mousemove", function(){return tooltip.style("top", (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+20)+"px");})
+    .on("mouseout", function(){
+      d3.select(this).style("fill", color_reminder);
+      return tooltip.style("visibility", "hidden");
+    });   
+  
+    // text of donut parts
+    // and mouse interactions: same as above but with 
+    // selection of previous donut-path to change color
+    g.append("text")
+      .attr("transform", function(d) {
+        var _d = arc.centroid(d);
+        _d[0] *= 1.0; //distance text and donut part
+        _d[1] *= 1.0; //multiply by a constant factor
+        return "translate(" + _d + ")";
+      })
+      .attr("dy", ".50em")
+      .style("text-anchor", "middle")
+      .attr('font-size', '0.83em')      
+      .attr("fill", "white")
+      .text(function(d) {
+        if(d.data.percentage < 3) {return '';}
+        return d.data.percentage;    
+      })
+      .on("mouseover", function(d){
+          var previous = d3.select(this.previousElementSibling);
+          color_reminder = previous.style("fill");
+          d3.select(this.previousElementSibling)
+            .style("fill", function() {
+              return d3.rgb(d3.select(this).style("fill")).darker(0.2);
+            });
+          tooltip.text(d.data.name + ": " + d.data.count);
+          d3.select(this).style("cursor", "pointer");
+          return tooltip.style("visibility", "visible");
+      })
+    .on("mousemove", function(){return tooltip.style("top", (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+20)+"px");})
+    .on("mouseout", function(){
+      d3.select(this.previousElementSibling).style("fill", color_reminder);
+      return tooltip.style("visibility", "hidden");
+    });       
+    
+    // text inside donut chart
+    g.append("text")
+      .attr('class', 'donut_inner')
+      .attr('y', inner_top)
+      .text(sum_media)
+      .on("mouseover", function(d){
+          tooltip.text("Medienelemente: " + sum_media);
+          d3.select(this).style("cursor", "pointer");
+          return tooltip.style("visibility", "visible");
+      })
+    .on("mousemove", function(){return tooltip.style("top", (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+20)+"px");})
+    .on("mouseout", function(){return tooltip.style("visibility", "hidden");}) ;
+
+    // Legend (Füllwörter, Inhaltswörter)
+    var donut_legend = svg.selectAll(".donut_legend")
+      .data(pie(data))
+      .enter().append("g")
+      .attr("transform", function(d,i){
+        return "translate(" + legend_left + "," + (-6.2 * data.length + i * 17) + ")";
+      })
+      .attr("class", "donut_legend");   
+    
+    // Legend circles
+    donut_legend.append("circle")
+      .attr("r", 5)
+      .style("fill", function(d,i) {return d.data.color;});
+
+    // Legend text
+    donut_legend.append("text")
+      .text(function(d){return d.data.name;})
+      .attr("x",  12)
+      .attr("y", 5);
+
+
+  </script>
