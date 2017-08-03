@@ -1,0 +1,25 @@
+<%# This file shows the media and uploaded images single document %>
+<%# TODO: Cleaning up a link should be done in analyzer %>
+
+<% doc_presenter = show_presenter(@document) %>
+<% links = doc_presenter.field_value "upLoadedImages" %>
+
+<div class="row">
+	<div class="col-sm-12 col-md-12">
+		<h4><%= t('blacklight.results.upLoadedImages')%> (<%=doc_presenter.field_value "nrUploadedImages"%>):</h4>
+		<ul class="portfolio_links">
+			<% unless links.to_s.strip.empty? %>
+				<% links = links.split(",") %>
+				<% if links.size > 1 %>
+					<% links[-1] = links[-1].sub!("and", "") %>
+				<% end %>
+				<% links.each do |link|%>
+					<li><%= link_to link, link, :target => "_blank" %></li>
+				<% end %>	
+			<% else %>
+				Keine extern hochgeladenen Bildern vorhanden					
+			<% end %>			
+		</ul>
+	</div>
+</div>
+
