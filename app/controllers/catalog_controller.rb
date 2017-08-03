@@ -123,26 +123,26 @@ class CatalogController < ApplicationController
     config.add_facet_fields_to_solr_request!
 
     
-    # -------- SOLR FIELDS TO DISPLAY IN SEARCH RESULTS --------   
-    # Choose which Fields to Display in Search Results
-    # solr fields to be displayed in the index (search results) view
-    # The ordering of the field names is the order of the display
+    # -------- SOLR FIELDS TO LOAD FOR SEARCH RESULTS --------   
+    # Fields to be loaded from solr server for search result list
+    # You only have to set them if you're using blacklights default view
 
     config.add_index_field 'portfolio_title', label: 'Portfolio-Titel'
     config.add_index_field 'title', label: 'Ansicht-Titel'
     config.add_index_field 'author', label: 'Autor', highlight: true
-
     config.add_index_field 'url', label: 'Url'
     config.add_index_field 'text', label: 'Text', highlight: true
     config.add_index_field 'indexDate', label: 'Index Datum'
     config.add_index_field 'nrImages', label: 'Anzahl der Bilder'
-    config.add_index_field 'nrUploadedImages', label: 'Hochgeladene Bilder'
+    config.add_index_field 'nrUploadedImages', label: 'Anzahl hochgeladener Bilder'
+    config.add_index_field 'upLoadedImages', label: 'Hochgeladener Bilder URL'
+    config.add_index_field 'nrExternalLinks', label: 'Anzahl externer Links'
     config.add_index_field 'nrWords', label: 'Anzahl Wörter'
+
     #config.add_index_field 'lastModified', label: 'LastMod'
     #config.add_index_field 'nrWikipediaImages', label: 'Nr Wiki Bilder'
     #config.add_index_field 'nrLinks', label: 'Nr Link'
     #config.add_index_field 'nrWikipediaLinks', label: 'Nr Wiki Links'
-
     #config.add_index_field 'local_storage_dir', label: 'Local Dir'
     #config.add_index_field 'author_de', label: 'Autor De'
     #config.add_index_field 'group', label: 'Gruppe'
@@ -150,7 +150,8 @@ class CatalogController < ApplicationController
 
     # -------- SOLR FIELDS IN SINGLE RESULT --------
     # solr fields to be displayed in the show (single result) view
-    # The ordering of the field names is the order of the display
+    # You only have to set them if you're using blacklights default view
+
     #config.add_show_field 'author', label: 'Autor' 
     #config.add_show_field 'url', label: 'Url'
     #config.add_show_field 'indexDate', label: 'Index Datum'
