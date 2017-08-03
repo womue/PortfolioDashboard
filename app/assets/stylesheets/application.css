@@ -113,6 +113,15 @@
 		margin-bottom: 20px;
 	}
 
+	.portfolio_links {
+		overflow: hidden;	
+	}
+
+	.portfolio_links li {
+		text-overflow: ellipsis;
+		white-space: nowrap;		
+	}
+
 	/* -------- STYLES FOR PORTFOLIO MANAGEMENT (update, delete) --------*/	
 	
 	.dataTables_wrapper {
