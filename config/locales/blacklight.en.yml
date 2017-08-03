@@ -39,9 +39,10 @@ en:
       lexicalDensity: 'Lexikalische Dichte: '
       nrImages: 'Bilder: '
       nrUploadedImages: 'Hochgelad. Bilder: '
+      upLoadedImages: 'Hochgeladene Bilder'
       nrLinks: 'Verlinkungen: '
       nrExternalLinks: 'Externe Links: '
-      externalLinks: 'Externe Links: '
+      externalLinks: 'Externe Links'
       nrRessources: 'Quellen: '
 
     header_links:
