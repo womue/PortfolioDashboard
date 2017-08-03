@@ -7,7 +7,6 @@
 
 <% doc_presenter = index_presenter(document) %>
 
-<% assessed = [true, false].sample %> <%# Fake %>
 <% d = DateTime.parse(doc_presenter.field_value "indexDate") %>
 <% last_modified = d.strftime('%d.%m.%Y').to_s + " um " + d.strftime('%I:%M').to_s + " (= IndexDate!!)" %>
 
@@ -48,7 +47,6 @@
 			<span class="lexicalDensity"><%= t('blacklight.results.lexicalDensity')%>?</span>
 		</div>
 		<div class="col-sm-3 col-md-3">
-			<%# Nr Uploaded Images ist immer -2 zu nrImages ---- %>
 			<span class="nrUploadedImages"><%= t('blacklight.results.nrUploadedImages')%><%= doc_presenter.field_value "nrUploadedImages" %></span>
 		</div>
 		<div class="col-sm-3 col-md-3">
@@ -56,10 +54,10 @@
 		</div>
 
 		<div class="col-sm-3 col-md-3">
-			<% if assessed == true %>
-				<span class="assessed_true text-success">bewertet (fake)</span>
+			<% if (doc_presenter.field_value "assessed") == "true" %>
+				<span class="assessed_true text-success">bewertet</span>
 			<% else %>
-				<span class="assessed_false text-danger">nicht bewertet (fake)</span>
+				<span class="assessed_false text-danger">nicht bewertet</span>
 			<% end %>
 		</div>
 	</div><!-- row -->
