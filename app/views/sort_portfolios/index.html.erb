@@ -9,7 +9,7 @@
 
 <div id="content" class="col-md-12 col-sm-12">
 
-	<!-- ALERT -->
+	<!-- SUCESS BOOTSTRAP ALERT -->
 	<div id="alert" class="alert alert-success alert-dismissible show invisible" role="alert">
 		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 			<span aria-hidden="true">&times;</span>
@@ -64,7 +64,7 @@
 	</div>
 
 	<!-- SEARCH PORTFOLIOS-->
-	<!-- now row used, so rails form stays on top -->
+	<!-- No use of 'row', so form for updating stays on top -->
 	<div class="col-md-4 col-sm-4">
 		<div class="panel panel-default">
 			<div class="panel-heading">Ansichten suchen</div>
@@ -89,7 +89,8 @@
 	</div>
 
 	<!-- UPDATE FIELDS -->
-	<!-- The form includes the checkmarks of the table -->
+	<!-- Important: The rails form has to stay on top -->
+	<!-- The form includes the checkmarks inside the table -->
 	<%= form_tag({:action => "update"}, {:class => "management_form form-inline"}) do |f| %>
 		<div class="col-md-4 col-sm-4">
 			<div class="panel panel-default">
@@ -138,7 +139,6 @@
 						<thead>
 							<tr>
 								<th>Check</th>
-								<!--<th>Text</th>-->
 								<th>Studierender</th>
 								<th>Portfolio Titel</th>
 								<th>Titel</th>
@@ -166,7 +166,6 @@
 		</div><!-- col -->
 	<% end %><!-- Form -->
 </div><!-- content -->
-
 
 
 <!-- SCRIPT DataTable -->
