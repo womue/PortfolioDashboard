@@ -1,6 +1,4 @@
 <!-- TODO -->
-<!-- Portfolio text field gets loaded into DOM to submit with the form. -->
-<!-- Background: A soon as I do an update of a field, the text gets deleted. -->
 <!-- Change from Ruby/Rails to Javascript solution. Add validation -->
 <!-- Rails only can access checkmarks of current table page bec. its hiding data in the dom ?! -->
 <!-- Selection of rows is buggy when selecting text with double click -->
@@ -43,7 +41,7 @@
 	solr = RSolr.connect :url => server
 	response = solr.get 'select', :params => {
 		:q=> query,
-		:fl=>['author', 'portfolio_title', 'title', 'lecture', 'cohort', 'id', 'text'],
+		:fl=>['author', 'portfolio_title', 'title', 'lecture', 'cohort', 'id'],
 		:wt => :ruby,
 		:hl => false,
 		:rows => 1000
@@ -136,12 +134,11 @@
 					</div>			
 
 					<!-- TABLE -->
-					<!-- The table is currently not a part of the formular -->
 					<table id="portfolio_table" class="table table-striped table-hover" width="100%" cellspacing="0">
 						<thead>
 							<tr>
 								<th>Check</th>
-								<th>Text</th>
+								<!--<th>Text</th>-->
 								<th>Studierender</th>
 								<th>Portfolio Titel</th>
 								<th>Titel</th>
@@ -154,7 +151,6 @@
 							<% response["response"]["docs"].each_with_index do |doc, index| %>
 								<tr>
 									<td class="check_tag"><%= check_box_tag 'index[]', "#{doc['id']}", false, class: 'select-checkbox' %></td>
-									<td><%= text_field_tag "#{doc['id'].to_s}", "#{doc['text'].to_s}", :id => "#{doc['id']}" %></td>
 									<td><%=doc["author"]%></td>
 									<td><%=doc["portfolio_title"]%></td>
 									<td><%=doc["title"]%></td>
