@@ -96,6 +96,8 @@ GEM
       activerecord
       kaminari-core (= 1.0.1)
     kaminari-core (1.0.1)
+    lazyload-rails (0.3.1)
+      nokogiri (~> 1.5)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
     mail (2.6.4)
@@ -199,6 +201,7 @@ DEPENDENCIES
   d3-rails
   jbuilder (~> 2.5)
   jquery-rails
+  lazyload-rails
   puma (~> 3.0)
   rails (~> 5.0.2)
   rsolr (~> 1.0)
@@ -211,4 +214,4 @@ DEPENDENCIES
   web-console (>= 3.3.0)
 
 BUNDLED WITH
-   1.15.1
+   1.16.1

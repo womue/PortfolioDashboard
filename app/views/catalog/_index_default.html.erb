@@ -26,42 +26,43 @@
 			<p><%= doc_presenter.field_value "text" %><%= link_to " ... weiterlesen", "/catalog/#{doc_presenter.field_value 'id'}"%></p>
     			
 
-	<%# ---- Calculations and qunatitative values ---- %>
-	<div class="row">
-		<div class="col-sm-3 col-md-3">
-			<span class="nrWords"><%= t('blacklight.results.nrWords')%><%= doc_presenter.field_value "nrWords" %></span>
-		</div>
-		<div class="col-sm-3 col-md-3">
-			<span class="nrImages"><%= t('blacklight.results.nrImages')%><%= doc_presenter.field_value "nrImages" %></span>
-		</div>
-		<div class="col-sm-3 col-md-3">
-			<span class="nrLinks"><%= t('blacklight.results.nrExternalLinks')%><%= doc_presenter.field_value "nrExternalLinks" %></span>
-		</div>
-		<div class="col-sm-3 col-md-3">
-			<span class="mahara_link"><%= link_to t('blacklight.tools.mahara'), "#{doc_presenter.field_value 'url'}", :target => '_blank' %></span>
-		</div>
-	</div><!-- row -->
+			<%# ---- Calculations and qunatitative values ---- %>
+			<%# First row: nrWords, nrImages, nrExternalLinks and link to mahara  %>
+			<div class="row">
+				<div class="col-sm-3 col-md-3">
+					<span class="nrWords"><%= t('blacklight.results.nrWords')%><%= doc_presenter.field_value "nrWords" %></span>
+				</div>
+				<div class="col-sm-3 col-md-3">
+					<span class="nrImages"><%= t('blacklight.results.nrImages')%><%= doc_presenter.field_value "nrImages" %></span>
+				</div>
+				<div class="col-sm-3 col-md-3">
+					<span class="nrLinks"><%= t('blacklight.results.nrExternalLinks')%><%= doc_presenter.field_value "nrExternalLinks" %></span>
+				</div>
+				<div class="col-sm-3 col-md-3">
+					<span class="mahara_link"><%= link_to t('blacklight.tools.mahara'), "#{doc_presenter.field_value 'url'}", :target => '_blank' %></span>
+				</div>
+			</div>
 
-	<div class="row">	
-		<div class="col-sm-3 col-md-3">
-			<span class="lexicalDensity"><%= t('blacklight.results.lexicalDensity')%>?</span>
-		</div>
-		<div class="col-sm-3 col-md-3">
-			<span class="nrUploadedImages"><%= t('blacklight.results.nrUploadedImages')%><%= doc_presenter.field_value "nrUploadedImages" %></span>
-		</div>
-		<div class="col-sm-3 col-md-3">
-			<span class="nrRessources"><%= t('blacklight.results.nrRessources')%>?</span>
-		</div>
+			<%# Second row: lexicalDensity, nrUploadedImages, nrRessources and assessed info %>
+			<div class="row">
+				<div class="col-sm-3 col-md-3">
+					<span class="lexicalDensity"><%= t('blacklight.results.lexicalDensity')%>?</span>
+				</div>
+				<div class="col-sm-3 col-md-3">
+					<span class="nrUploadedImages"><%= t('blacklight.results.nrUploadedImages')%><%= doc_presenter.field_value "nrUploadedImages" %></span>
+				</div>
+				<div class="col-sm-3 col-md-3">
+					<span class="nrRessources"><%= t('blacklight.results.nrRessources')%>?</span>
+				</div>
 
-		<div class="col-sm-3 col-md-3">
-			<% if (doc_presenter.field_value "assessed") == "true" %>
-				<span class="assessed_true text-success">bewertet</span>
-			<% else %>
-				<span class="assessed_false text-danger">nicht bewertet</span>
-			<% end %>
-		</div>
-	</div><!-- row -->
-			
+				<div class="col-sm-3 col-md-3">
+					<% if (doc_presenter.field_value "assessed") == "true" %>
+						<span class="assessed_true text-success">bewertet</span>
+					<% else %>
+						<span class="assessed_false text-danger">nicht bewertet</span>
+					<% end %>
+				</div>
+			</div>			
 		</div>
 	</div>
 

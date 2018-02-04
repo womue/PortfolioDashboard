@@ -158,8 +158,9 @@ class CatalogController < ApplicationController
     #config.add_show_field 'text', label: 'Text'
     
     config.add_show_field 'nrWords', label: 'Wörter'
-    config.add_show_field 'nrImages', :label => 'Bilder'
+    config.add_show_field 'nrImages', label: 'Bilder'
     config.add_show_field 'nrUploadedImages', label: 'Hochgeladene Bilder'
+    config.add_show_field 'upLoadedImages', label: 'Hochgelad Bilder'
     config.add_show_field 'nrWikipediaImages', label: 'Wikipedia Bilder'
     config.add_show_field 'nrInstagramImages', label: 'Instagram Bilder'
     config.add_show_field 'nrFlickrImages', label: 'Flickr Bilder'

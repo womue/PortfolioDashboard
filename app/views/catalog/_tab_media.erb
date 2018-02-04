@@ -1,0 +1,30 @@
+
+<% sum_nrimages = 0 %>
+<% @response.documents.each do |object| -%>
+  <% doc_presenter = index_presenter(object) %>
+  
+  <%# Author and title of view %>
+  <%= (doc_presenter.field_value "author").to_s %>
+  <%= doc_presenter.field_value "title" %>
+
+  <% upLoadedImages = doc_presenter.field_value "upLoadedImages" %>
+  <% upLoadedImages = upLoadedImages.split(",") %>
+
+  <% if upLoadedImages.empty? %>
+  	<div>Keine Bilder in dieser Ansicht</div>
+  <% end%>
+
+  <ul>
+	  <% upLoadedImages.each do |image| %>
+	  	<% image.gsub!("amp;", "") %>
+		<%# image += "&maxheight=24&maxwidth=24" %>
+		<%#= image_tag image %>
+		<li><%= link_to image, image, :target => "_blank" %></li>
+	  <% end %>
+  </ul>
+  
+  <% %>
+  <% %>
+  <% %>
+<% end -%>
+
