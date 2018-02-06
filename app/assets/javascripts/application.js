@@ -11,10 +11,11 @@
 // about supported directives.
 //
 //= require jquery
-//= require 'blacklight_advanced_search'
-//
 //= require jquery_ujs
 //= require turbolinks//
+//= require 'blacklight_advanced_search'
+//= require lightbox
+//
 //
 // Required by Blacklight
 //= require blacklight/blacklight
@@ -29,3 +30,4 @@
 // d3layoutcloud: gets loaded by require_tree
 //
 //= require_tree .
+/*

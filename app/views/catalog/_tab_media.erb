@@ -1,30 +1,42 @@
+<%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+<ul>
+	<li>You have to be logged in to moopaed and swtich to mahara! <a href="https://www.moopaed.de/moodle/login/index.php">Mahara Login</a></li>
+	<li>Onlye images of the current result page are shown.</li>
+</ul>
 
 <% sum_nrimages = 0 %>
 <% @response.documents.each do |object| -%>
-  <% doc_presenter = index_presenter(object) %>
-  
-  <%# Author and title of view %>
-  <%= (doc_presenter.field_value "author").to_s %>
-  <%= doc_presenter.field_value "title" %>
+	<% doc_presenter = index_presenter(object) %>
 
-  <% upLoadedImages = doc_presenter.field_value "upLoadedImages" %>
-  <% upLoadedImages = upLoadedImages.split(",") %>
+	<%# Author and title of view %>
+	<h4><b><%= (doc_presenter.field_value "author").to_s %>: <%= doc_presenter.field_value "title" %><b></h4>
 
-  <% if upLoadedImages.empty? %>
-  	<div>Keine Bilder in dieser Ansicht</div>
-  <% end%>
+	<% upLoadedImages = doc_presenter.field_value "upLoadedImages" %>
+	<% upLoadedImages = upLoadedImages.split(",") %>
 
-  <ul>
-	  <% upLoadedImages.each do |image| %>
-	  	<% image.gsub!("amp;", "") %>
-		<%# image += "&maxheight=24&maxwidth=24" %>
-		<%#= image_tag image %>
-		<li><%= link_to image, image, :target => "_blank" %></li>
-	  <% end %>
-  </ul>
+	<% if upLoadedImages.empty? %>
+		<div>Keine Bilder in dieser Ansicht</div>
+	<% end%>
+
+	<% counter = 0 %>
+	<% upLoadedImages.each do |image_url| %>
+		<% if image_url.include?("and ") %>
+			<% image_url.sub!("and ", "") %>
+			<% image_url.strip! %>
+		<% end %>
+		<% image_url.gsub!("amp;", "") %>
+		<% image_url_small = image_url + "&maxheight=100&maxwidth=100" %>
+		<%# Attention: image_tag is not working here so classic html is used %>
+		<a class="image-link" href=<%="#{image_url}"%> data-lightbox="example-set" data-title="Data title">
+			<img alt="image" src=<%="#{image_url_small}"%> >
+		</a>				
+	<% end %>
+
   
   <% %>
   <% %>
   <% %>
 <% end -%>
+
 

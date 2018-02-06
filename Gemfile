@@ -17,6 +17,11 @@ gem "blacklight_advanced_search"
 # See: https://github.com/iblue/d3-rails
 gem "d3-rails"
 
+gem 'lightbox2-rails'
+
+# Lazy Load delays loading of images in long web pages.
+# Images outside of viewport won't be loaded before user scrolls to them.
+gem 'lazyload-rails'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.2'
