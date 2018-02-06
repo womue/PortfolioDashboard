@@ -118,7 +118,7 @@ class CatalogController < ApplicationController
        #:years_25 => { label: 'within 25 Years', fq: "pub_date:[#{Time.zone.now.year - 25 } TO *]" }
     #}
 
-    # Have BL send all facet field names to Solr, which has been the default previously. 
+    # Have BL send all facet field names to Solr, which has been the default previously.
     # Simply remove these lines if you'd rather use Solr request handler defaults, or have no facets.
     config.add_facet_fields_to_solr_request!
 
