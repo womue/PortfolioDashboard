@@ -98,6 +98,8 @@ GEM
     kaminari-core (1.0.1)
     lazyload-rails (0.3.1)
       nokogiri (~> 1.5)
+    lightbox2-rails (2.8.2.1)
+      railties (>= 3.1)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
     mail (2.6.4)
@@ -202,6 +204,7 @@ DEPENDENCIES
   jbuilder (~> 2.5)
   jquery-rails
   lazyload-rails
+  lightbox2-rails
   puma (~> 3.0)
   rails (~> 5.0.2)
   rsolr (~> 1.0)
