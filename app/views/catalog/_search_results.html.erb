@@ -33,11 +33,11 @@
     <!-- Tab: List all results -->
     <div role="tabpanel" class="tab-pane active" id="portfolio">
       <%- if @response.empty? %>
-      <%= render "zero_results" %>
+        <%= render "zero_results" %>
       <%- elsif render_grouped_response? %>
-      <%= render_grouped_document_index %>
+        <%= render_grouped_document_index %>
       <%- else %>
-      <%= render_document_index %>
+        <%= render_document_index %>
       <%- end %>    
       <%= render 'results_pagination' %>
     </div>
@@ -53,6 +53,7 @@
           </div>
         </div>
 
+        <!-- Wortanzahl, Häufigste Verlinkungen, Verlinkungen -->
         <div class="row visualization_line">
           <div class="col-sm-4 col-md-4">
             <h5>Wortanzahl (TODOS)</h5>
@@ -72,11 +73,18 @@
 
         <div class="row">
           <div class="col-sm-12 col-md-12">
+            <h5>Bildquellen</h5>
+            <%= render 'image_source' %>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-12 col-md-12">
             <h5>Zentrale Begriffe</h5>
             <%= render 'word_cloud' %>
           </div>                       
         </div>
-      <% end %>
+      <% end #if clause %>
     </div>
 
     <!-- Tab: Ressources -->   

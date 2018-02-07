@@ -22,7 +22,6 @@
     
     <%# Build a customized headline/ link to the single document %>
     <% link_name = doc_presenter.field_value 'title'.to_s %>
-    <% link_name = link_name.chomp(' - moopaed mahara')%>
     <%= link_to "#{link_name}", "/catalog/#{doc_presenter.field_value 'id'}"%>
   </h3>
 

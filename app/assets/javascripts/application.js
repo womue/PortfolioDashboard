@@ -16,7 +16,6 @@
 //= require 'blacklight_advanced_search'
 //= require lightbox
 //
-//
 // Required by Blacklight
 //= require blacklight/blacklight
 //

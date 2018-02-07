@@ -18,6 +18,7 @@ gem "blacklight_advanced_search"
 gem "d3-rails"
 
 gem 'lightbox2-rails'
+gem 'rsolr', '~> 1.0'
 
 # Lazy Load delays loading of images in long web pages.
 # Images outside of viewport won't be loaded before user scrolls to them.
@@ -68,5 +69,3 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 group :development, :test do
   gem 'solr_wrapper', '>= 0.3'
 end
-
-gem 'rsolr', '~> 1.0'

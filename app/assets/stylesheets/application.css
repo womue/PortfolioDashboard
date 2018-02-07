@@ -148,6 +148,25 @@
 	}
 
 
+	/* -------- STYLES FOR LIGHTBOX2 IMAGE VIEWER--------*/	
+	.image_container {
+		display: inline-block;
+		width: 100%;
+	}
+
+	.lightbox_thumbnail {
+		background-color: #fff;
+		border: 1px solid #ddd;
+		border-radius: 4px;
+		display: block;
+		float: left;
+		height: 100px;
+		margin: 4px;
+		overflow: hidden;  
+		padding: 10px;
+		text-align: center;
+		width: 15%;	  
+	}
 	
 
 	/* -------- OVERWRITE BLACKLIGHT CSS --------*/
@@ -310,9 +329,6 @@
 	#word_cloud {
 		margin-bottom: 15px;
 	}  
-
-
-
 
 	.calculation {
 		background-color: #f5f5f5;

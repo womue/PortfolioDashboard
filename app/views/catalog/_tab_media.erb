@@ -2,41 +2,56 @@
 
 <ul>
 	<li>You have to be logged in to moopaed and swtich to mahara! <a href="https://www.moopaed.de/moodle/login/index.php">Mahara Login</a></li>
-	<li>Onlye images of the current result page are shown.</li>
+	<li>Only images of the current dashboard result-page are shown.</li>
 </ul>
 
 <% sum_nrimages = 0 %>
 <% @response.documents.each do |object| -%>
+	
 	<% doc_presenter = index_presenter(object) %>
-
-	<%# Author and title of view %>
-	<h4><b><%= (doc_presenter.field_value "author").to_s %>: <%= doc_presenter.field_value "title" %><b></h4>
-
+	<% nrUploadedImages = (doc_presenter.field_value "nrUploadedImages").to_i %>
 	<% upLoadedImages = doc_presenter.field_value "upLoadedImages" %>
 	<% upLoadedImages = upLoadedImages.split(",") %>
+	<% upLoadedImages.uniq! %>
 
-	<% if upLoadedImages.empty? %>
+	<h5><b>
+		<%# Author and title of view %>
+		<%= doc_presenter.field_value "author" %>: 
+		<%= doc_presenter.field_value "title" %>
+	</b></h5>
+
+
+	<% if upLoadedImages.empty? == false %>
+		<small>Bilder in dieser Ansicht: <%= nrUploadedImages %> davon identisch: <%= nrUploadedImages - upLoadedImages.size %></small>
+	<% else %>
 		<div>Keine Bilder in dieser Ansicht</div>
+		<% next %>
 	<% end%>
 
-	<% counter = 0 %>
-	<% upLoadedImages.each do |image_url| %>
-		<% if image_url.include?("and ") %>
-			<% image_url.sub!("and ", "") %>
-			<% image_url.strip! %>
-		<% end %>
-		<% image_url.gsub!("amp;", "") %>
-		<% image_url_small = image_url + "&maxheight=100&maxwidth=100" %>
-		<%# Attention: image_tag is not working here so classic html is used %>
-		<a class="image-link" href=<%="#{image_url}"%> data-lightbox="example-set" data-title="Data title">
-			<img alt="image" src=<%="#{image_url_small}"%> >
-		</a>				
-	<% end %>
+	<div class="image_container">
+		<% upLoadedImages.each_with_index do |image_url, i| %>
+			<%
+				# Clean up image url
+				insert_row = false
+				insert_row = true if (i+1) % 6 == 0
+				if image_url.include?("and ")
+					image_url.sub!("and ", "")
+					image_url.strip!
+				end
+				image_url.gsub!("amp;", "")
+				image_url_small = image_url + "&height=80"
+			%>
 
-  
-  <% %>
-  <% %>
-  <% %>
-<% end -%>
+			<!-- Insert image in html -->
+			<!-- Attention: image_tag is not working, so classic html is used -->
+			<a class="image-link" href=<%="#{image_url}"%> data-lightbox="example-set" data-title=<%="#{image_url}"%>>
+				<div class="lightbox_thumbnail">
+					<img alt="image" src=<%="#{image_url_small}"%>> <!--thumbnail-->
+				</div>
+			</a>
+		<% end %>
+	</div>
+
+<% end %>
 
 

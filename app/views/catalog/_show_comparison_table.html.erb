@@ -1,13 +1,13 @@
 <%# ---- Comparison preparation---- %>
 <% 
-require 'rsolr'
+#require 'rsolr'
 %>
 <% doc_presenter = show_presenter(@document) %>
 
 <% lecture = doc_presenter.field_value "lecture" %>
 <% lecture_search = "lecture: \"#{lecture}\"" %>
-<% cohort = doc_presenter.field_value "cohort" %>
-<% cohort_search = "cohort: \"#{cohort}\"" %>
+<% group = doc_presenter.field_value "group" %>
+<% group_search = "group: \"#{group}\"" %>
 
 <%# ---- LECTURE---- %>
 <%
@@ -19,7 +19,7 @@ response_lecture = solr.get 'select', :params => {
 	:fl=>['nrWords', 'nrImages', 'nrUploadedImages', 'nrWikipediaImages', 'nrInstagramImages', 'nrFlickrImages', 'nrSnapchatImages', 'nrPinterestImages', 'nrExternalLinks', 'nrWikipediaLinks'],
 	:wt => :ruby,
 	:hl => false,
-	:rows => 1000
+	:rows => 10000
 }
 %>
 
@@ -44,13 +44,13 @@ response_lecture = solr.get 'select', :params => {
 end %>
 
 
-<%# ---- COHORT---- %>
+<%# ---- group---- %>
 <%
 # Server is globally set in application rb
 server = Rails.application.config.solr_server
 solr = RSolr.connect :url => server
-response_cohort = solr.get 'select', :params => {
-	:q=> cohort_search,
+response_group = solr.get 'select', :params => {
+	:q=> group_search,
 	:fl=>['nrWords', 'nrImages', 'nrUploadedImages', 'nrWikipediaImages', 'nrInstagramImages', 'nrFlickrImages', 'nrSnapchatImages', 'nrPinterestImages', 'nrExternalLinks', 'nrWikipediaLinks'],
 	:wt => :ruby,
 	:hl => false,
@@ -58,23 +58,23 @@ response_cohort = solr.get 'select', :params => {
 }
 %>
 
-<% cohort_data = {:nrWords=> 0, :nrImages=> 0, :nrUploadedImages=> 0, :nrWikipediaImages=> 0, :nrInstagramImages=> 0, :nrFlickrImages=> 0, :nrSnapchatImages=> 0, :nrPinterestImages=> 0, :nrExternalLinks=> 0, :nrWikipediaLinks=> 0}%>
-<% response_cohort["response"]["docs"].each_with_index do |doc, i| %>
-	<% cohort_data[:nrWords] = cohort_data[:nrWords]+doc["nrWords"] %>
-	<% cohort_data[:nrImages] = cohort_data[:nrImages]+doc["nrImages"] %>
-	<% cohort_data[:nrUploadedImages] = cohort_data[:nrUploadedImages]+doc["nrUploadedImages"] %>
-	<% cohort_data[:nrWikipediaImages] = cohort_data[:nrWikipediaImages]+doc["nrWikipediaImages"] %>
-	<% cohort_data[:nrInstagramImages] = cohort_data[:nrWikipediaImages]+doc["nrWikipediaImages"] %>
-	<% cohort_data[:nrFlickrImages] = cohort_data[:nrWikipediaImages]+doc["nrWikipediaImages"] %>
-	<% cohort_data[:nrSnapchatImages] = cohort_data[:nrWikipediaImages]+doc["nrWikipediaImages"] %>
-	<% cohort_data[:nrPinterestImages] = cohort_data[:nrWikipediaImages]+doc["nrWikipediaImages"] %>
-	<% cohort_data[:nrExternalLinks] = cohort_data[:nrExternalLinks]+doc["nrExternalLinks"] %>
-	<% cohort_data[:nrWikipediaLinks] = cohort_data[:nrWikipediaLinks]+doc["nrWikipediaLinks"] %>
+<% group_data = {:nrWords=> 0, :nrImages=> 0, :nrUploadedImages=> 0, :nrWikipediaImages=> 0, :nrInstagramImages=> 0, :nrFlickrImages=> 0, :nrSnapchatImages=> 0, :nrPinterestImages=> 0, :nrExternalLinks=> 0, :nrWikipediaLinks=> 0}%>
+<% response_group["response"]["docs"].each_with_index do |doc, i| %>
+	<% group_data[:nrWords] = group_data[:nrWords]+doc["nrWords"] %>
+	<% group_data[:nrImages] = group_data[:nrImages]+doc["nrImages"] %>
+	<% group_data[:nrUploadedImages] = group_data[:nrUploadedImages]+doc["nrUploadedImages"] %>
+	<% group_data[:nrWikipediaImages] = group_data[:nrWikipediaImages]+doc["nrWikipediaImages"] %>
+	<% group_data[:nrInstagramImages] = group_data[:nrWikipediaImages]+doc["nrWikipediaImages"] %>
+	<% group_data[:nrFlickrImages] = group_data[:nrWikipediaImages]+doc["nrWikipediaImages"] %>
+	<% group_data[:nrSnapchatImages] = group_data[:nrWikipediaImages]+doc["nrWikipediaImages"] %>
+	<% group_data[:nrPinterestImages] = group_data[:nrWikipediaImages]+doc["nrWikipediaImages"] %>
+	<% group_data[:nrExternalLinks] = group_data[:nrExternalLinks]+doc["nrExternalLinks"] %>
+	<% group_data[:nrWikipediaLinks] = group_data[:nrWikipediaLinks]+doc["nrWikipediaLinks"] %>
 <% end %>
 
-<% cohort_data.each do |key, value| 
+<% group_data.each do |key, value| 
 	if value !=0  
-		cohort_data[key] = value/response_cohort["response"]["numFound"] 
+		group_data[key] = value/response_group["response"]["numFound"] 
 	end 
 end %>
 
@@ -86,7 +86,7 @@ end %>
 		<th>Feld</th>
 		<th>Person: <%= doc_presenter.field_value "author" %></th>
 		<th>Seminar: <%= doc_presenter.field_value "lecture" %> &empty; / n= <%= response_lecture["response"]["numFound"]%></th>
-		<th>Kohorte <%=cohort%> &empty; / n= <%= response_cohort["response"]["numFound"]%></th>
+		<th>Kohorte <%=group%> &empty; / n= <%= response_group["response"]["numFound"]%></th>
 	</tr>
 	
 	<!-- shown fields are defined in catalog_controller.rb -->
@@ -95,7 +95,7 @@ end %>
 			<td class="blacklight-<%= field_name.parameterize %>"><%= render_document_show_field_label @document, field: field_name %></td>
 			<td class="blacklight-<%= field_name.parameterize %>"><%= doc_presenter.field_value field_name %></td>
 			<td><%= lecture_data[field_name.to_sym] %></td>
-			<td><%= cohort_data[field_name.to_sym] %></td>
+			<td><%= group_data[field_name.to_sym] %></td>
 		</tr>
 	<% end -%>
 </table>
