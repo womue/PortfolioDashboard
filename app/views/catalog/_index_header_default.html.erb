@@ -20,7 +20,7 @@
       </span>
     <% end %>
     
-    <%# Build a customized headline/ link to the single document %>
+    <%# Link to the single view %>
     <% link_name = doc_presenter.field_value 'title'.to_s %>
     <%= link_to "#{link_name}", "/catalog/#{doc_presenter.field_value 'id'}"%>
   </h3>

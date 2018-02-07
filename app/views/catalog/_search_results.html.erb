@@ -103,3 +103,12 @@
 
   </div>
 </div>
+
+<script>
+  // If tab 'media' is clicked, force lazy loader to let images in current viewport appear
+  $('a[href="#media"]').click(function (e) {
+    e.preventDefault();
+    $(this).tab('show');
+    $(window).trigger("lookup");
+  });
+</script>

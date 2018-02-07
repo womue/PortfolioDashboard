@@ -21,14 +21,13 @@
 	</b></h5>
 
 
+
 	<% if upLoadedImages.empty? == false %>
 		<small>Bilder in dieser Ansicht: <%= nrUploadedImages %> davon identisch: <%= nrUploadedImages - upLoadedImages.size %></small>
 	<% else %>
 		<div>Keine Bilder in dieser Ansicht</div>
 		<% next %>
 	<% end%>
-
-	<% images = ["https://www.moopaed.de/mahara/artefact/file/download.php?file=122173&view=16302", "https://www.moopaed.de/mahara/artefact/file/download.php?file=122174&view=16302"] %>
 
 	<div class="image_container">
 		<% upLoadedImages.each do |image_url| %>
@@ -41,11 +40,11 @@
 				image_url_small = image_url + "&height=80"
 			%>
 
-			<!-- Insert image in html -->
-
-
+			<!-- Insert image -->
 			<%= link_to (image_url), :title => "Click to see full image", :class => "image-link", :"data-lightbox" => "upLoadedImages", :"data-title" => "Ansicht: #{title} </br> URL: #{image_url}" do %>
-				<div class="lightbox_thumbnail"><%= image_tag image_url_small %></div>
+				<%= content_tag :div, class: "lightbox_thumbnail" do -%>
+				  <%= lazy_image_tag(image_url_small) %>
+				<% end -%>
 			<% end %>
 
 			

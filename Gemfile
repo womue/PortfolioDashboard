@@ -20,12 +20,14 @@ gem "d3-rails"
 gem 'lightbox2-rails'
 gem 'rsolr', '~> 1.0'
 
-# Lazy Load delays loading of images in long web pages.
-# Images outside of viewport won't be loaded before user scrolls to them.
-gem 'lazyload-rails'
+# Lazy loaded images on rails.
+# See https://github.com/madetech/unveil-rails
+# See http://luis-almeida.github.io/unveil/
+gem 'unveil-rails', '~> 0.2.1'
+
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.0.2'
+gem 'rails', '5.0.2'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
 # Use Puma as the app server

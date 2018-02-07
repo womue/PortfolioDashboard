@@ -15,6 +15,7 @@
 //= require turbolinks//
 //= require 'blacklight_advanced_search'
 //= require lightbox
+//= require unveil_init
 //
 // Required by Blacklight
 //= require blacklight/blacklight
@@ -29,4 +30,3 @@
 // d3layoutcloud: gets loaded by require_tree
 //
 //= require_tree .
-/*
