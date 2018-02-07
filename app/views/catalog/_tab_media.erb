@@ -16,8 +16,8 @@
 
 	<h5><b>
 		<%# Author and title of view %>
-		<%= doc_presenter.field_value "author" %>: 
-		<%= doc_presenter.field_value "title" %>
+		<%= author = doc_presenter.field_value "author" %>: 
+		<%= title = doc_presenter.field_value "title" %>
 	</b></h5>
 
 
@@ -28,27 +28,27 @@
 		<% next %>
 	<% end%>
 
+	<% images = ["https://www.moopaed.de/mahara/artefact/file/download.php?file=122173&view=16302", "https://www.moopaed.de/mahara/artefact/file/download.php?file=122174&view=16302"] %>
+
 	<div class="image_container">
-		<% upLoadedImages.each_with_index do |image_url, i| %>
+		<% upLoadedImages.each do |image_url| %>
+
 			<%
 				# Clean up image url
-				insert_row = false
-				insert_row = true if (i+1) % 6 == 0
-				if image_url.include?("and ")
-					image_url.sub!("and ", "")
-					image_url.strip!
-				end
+				image_url.sub!("and ", "")
 				image_url.gsub!("amp;", "")
+				image_url.strip!
 				image_url_small = image_url + "&height=80"
 			%>
 
 			<!-- Insert image in html -->
-			<!-- Attention: image_tag is not working, so classic html is used -->
-			<a class="image-link" href=<%="#{image_url}"%> data-lightbox="example-set" data-title=<%="#{image_url}"%>>
-				<div class="lightbox_thumbnail">
-					<img alt="image" src=<%="#{image_url_small}"%>> <!--thumbnail-->
-				</div>
-			</a>
+
+
+			<%= link_to (image_url), :title => "Click to see full image", :class => "image-link", :"data-lightbox" => "upLoadedImages", :"data-title" => "Ansicht: #{title} </br> URL: #{image_url}" do %>
+				<div class="lightbox_thumbnail"><%= image_tag image_url_small %></div>
+			<% end %>
+
+			
 		<% end %>
 	</div>
 
