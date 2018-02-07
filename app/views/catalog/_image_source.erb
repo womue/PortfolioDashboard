@@ -1,0 +1,24 @@
+<% 
+# Explanation: 
+# TODO: Get content words and filling words from solr - they currently are faked
+# TODO: Transfer local CSS into application.css
+# TODO: WHY IS THIS DONUT SHOWING THE AVERAGE WORDS???
+-%>
+
+<%# Summing all picture types  %>
+<% field_hash = { nrUploadedImages: 0, nrWikipediaImages: 0, nrInstagramImages: 0, nrFlickrImages: 0, nrSnapchatImages: 0, nrPinterestImages: 0, nrWikipediaLinks: 0 } %>
+
+<% 
+  @response.documents.each do |object|
+    field_hash.each do |key, value|
+        doc_presenter = index_presenter(object)
+        field_hash[key] +=  (doc_presenter.field_value key).to_i
+    end
+  end
+%>
+
+<% field_hash.each do |key, value| %>
+  <li><%= key %><%= value %></li>
+<% end %>
+
+ 
