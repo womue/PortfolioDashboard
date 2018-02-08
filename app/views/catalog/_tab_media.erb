@@ -1,56 +1,58 @@
 <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
 
-<ul>
-	<li>You have to be logged in to moopaed and swtich to mahara! <a href="https://www.moopaed.de/moodle/login/index.php">Mahara Login</a></li>
-	<li>Only images of the current dashboard result-page are shown.</li>
-</ul>
-
-<% sum_nrimages = 0 %>
-<% @response.documents.each do |object| -%>
-	
-	<% doc_presenter = index_presenter(object) %>
-	<% nrUploadedImages = (doc_presenter.field_value "nrUploadedImages").to_i %>
-	<% upLoadedImages = doc_presenter.field_value "upLoadedImages" %>
-	<% upLoadedImages = upLoadedImages.split(",") %>
-	<% upLoadedImages.uniq! %>
-
-	<h5><b>
-		<%# Author and title of view %>
-		<%= author = doc_presenter.field_value "author" %>: 
-		<%= title = doc_presenter.field_value "title" %>
-	</b></h5>
+<div class="documents-list">
+	<ul>
+		<li>You have to be logged in to mahara! <a href="https://www.moopaed.de/moodle/login/index.php">Moopaed->Mahara Login</a></li>
+		<li>Only images of the current dashboard result-page are shown.</li>
+		<li>Images are lazy loaded. Refresh viewport if images are not shown.</li>
+		<li>If identical images (by url) appear, only one of them is shown.</li>
+	</ul>
 
 
+	<% @response.documents.each do |object| -%>		
+		<%# Obtain data %>
+		<% doc_presenter = index_presenter(object) %>
+		<% nrUploadedImages = (doc_presenter.field_value "nrUploadedImages").to_i %>
+		<% upLoadedImages = doc_presenter.field_value "upLoadedImages" %>
+		<% upLoadedImages = upLoadedImages.split(",") %>
+		<% upLoadedImages.uniq! %>
 
-	<% if upLoadedImages.empty? == false %>
-		<small>Bilder in dieser Ansicht: <%= nrUploadedImages %> davon identisch: <%= nrUploadedImages - upLoadedImages.size %></small>
-	<% else %>
-		<div>Keine Bilder in dieser Ansicht</div>
-		<% next %>
-	<% end%>
+		<div class="document">
+			<div class="documentHeader row">
+				<h5 class="document-title-heading col-md-12">
+					<%# Author and title of view %>
+					<% author = doc_presenter.field_value "author" %>
+					<% title = doc_presenter.field_value "title".to_s %>
+					<%= link_to "#{title} (#{author})", "/catalog/#{doc_presenter.field_value 'id'}"%>
+				</h5>
+			</div>
 
-	<div class="image_container">
-		<% upLoadedImages.each do |image_url| %>
 
-			<%
-				# Clean up image url
-				image_url.sub!("and ", "")
-				image_url.gsub!("amp;", "")
-				image_url.strip!
-				image_url_small = image_url + "&height=80"
-			%>
+			<div class="document-metadata dl-horizontal dl-invert">
+				<% if upLoadedImages.empty? %>
+					<%= content_tag(:p, "Keine Bilder in dieser Ansicht") %>
+					<% next %>
+				<% end%>
 
-			<!-- Insert image -->
-			<%= link_to (image_url), :title => "Click to see full image", :class => "image-link", :"data-lightbox" => "upLoadedImages", :"data-title" => "Ansicht: #{title} </br> URL: #{image_url}" do %>
-				<%= content_tag :div, class: "lightbox_thumbnail" do -%>
-				  <%= lazy_image_tag(image_url_small) %>
-				<% end -%>
-			<% end %>
+				<div class="image_container">
+					<% upLoadedImages.each do |image_url| %>
+						<%# Clean up image url %>
+						<% image_url.sub!("and ", "") %>
+						<% image_url.gsub!("amp;", "") %>
+						<% image_url.strip! %>
+						<% image_url_small = image_url + "&height=80" %>						
+						<%# Insert image %>
+						<%= link_to (image_url), :title => "Click to see full image", :class => "image-link", :"data-lightbox" => "upLoadedImages", :"data-title" => "Ansicht: #{title} </br> URL: #{image_url}" do %>
+							<%= content_tag :div, class: "lightbox_thumbnail" do -%>
+							  <%= lazy_image_tag(image_url_small) %>
+							<% end -%>
+						<% end %>						
+					<% end %>
+				</div>
+			</div>
+		</div>
+	<% end %>
+</div>
 
-			
-		<% end %>
-	</div>
-
-<% end %>
 
 
