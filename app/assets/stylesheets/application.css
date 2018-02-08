@@ -68,41 +68,15 @@
 		vertical-align: bottom;
 	}
 
-	.nrWords::before {
-		content: url(/result/nrWords.png);
-	}
-
-	.nrImages::before {
-		content: url(/result/nrImages.png);
-	}
-
-	.nrLinks::before {
-		content: url(/result/nrLinks.png);
-	}
-
-	.lexicalDensity::before {
-		content: url(/result/lexicalDensity.png);
-	}
-
-	.nrUploadedImages::before {
-		content: url(/result/nrUploadedImages.png);
-	}
-
-	.nrRessources::before {
-		content: url(/result/nrRessources.png);
-	}
-
-	.mahara_link::before {
-		content: url(/result/mahara_link.png);
-	}
-
-	.assessed_true::before {
-		content: url(/result/assessed_true.png);
-	}
-
-	.assessed_false::before {
-		content: url(/result/assessed_false.png);
-	}	
+	.nrWords::before {content: url(/result/nrWords.png);}
+	.nrImages::before {content: url(/result/nrImages.png);}
+	.nrLinks::before {content: url(/result/nrLinks.png);}
+	.lexicalDensity::before {content: url(/result/lexicalDensity.png);}
+	.nrUploadedImages::before {content: url(/result/nrUploadedImages.png);}
+	.nrRessources::before {content: url(/result/nrRessources.png);}
+	.mahara_link::before {content: url(/result/mahara_link.png);}
+	.assessed_true::before {content: url(/result/assessed_true.png);}
+	.assessed_false::before {content: url(/result/assessed_false.png);}	
 
 	/* -------- STYLES FOR A SINGLE RESULT --------*/	
 
@@ -120,6 +94,27 @@
 		text-overflow: ellipsis;
 		white-space: nowrap;		
 	}
+
+	.wikipedia_small, .instagram_small, .flickr_small, .snapchat_small, .pinterest_small {
+		display: block;
+		font-size: 12px;
+		margin-bottom: 5px;
+	}
+
+	.wikipedia_small::before, .instagram_small::before, .flickr_small::before, .snapchat_small::before, .pinterest_small::before {
+		display: inline-block;
+		margin: 0 6px -3px 0;
+		opacity: 0.58;
+		vertical-align: bottom;
+	}	
+
+	/* www.iconfinder.com/iconsets/liu-square-blac */
+	.wikipedia_small::before {content: url(/result/wikipedia_small.png);}
+	.instagram_small::before {content: url(/result/instagram_small.png);}
+	.flickr_small::before {content: url(/result/flickr_small.png);}
+	.snapchat_small::before {content: url(/result/snapchat_small.png);}
+	.pinterest_small::before {content: url(/result/pinterest_small.png);}
+
 
 	/* -------- STYLES FOR PORTFOLIO MANAGEMENT (update, delete) --------*/	
 	
