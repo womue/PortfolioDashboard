@@ -1,4 +1,4 @@
-<%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+<%= javascript_include_tag 'lightbox.js', 'data-turbolinks-track': 'reload' %>
 
 <div class="documents-list">
 	<ul>
@@ -7,6 +7,13 @@
 		<li>Images are lazy loaded. Refresh viewport if images are not shown.</li>
 		<li>If identical images (by url) appear, only one of them is shown.</li>
 	</ul>
+
+	<div class="row">
+		<div class="col-sm-12 col-md-12">
+			<h5>Bildquellen</h5>
+			<%= render 'image_source' %>
+		</div>
+	</div>	
 
 
 	<% @response.documents.each do |object| -%>		
@@ -53,6 +60,9 @@
 		</div>
 	<% end %>
 </div>
+
+<%# Pagination %>
+<%= render 'results_pagination' %>
 
 
 

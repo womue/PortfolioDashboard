@@ -12,3 +12,4 @@ Rails.application.config.assets.version = '1.0'
 
 # To have the images for lightbox precompiled:
 Rails.application.config.assets.precompile += %w( lightbox/* )
+Rails.application.config.assets.precompile += %w( lightbox.js )
