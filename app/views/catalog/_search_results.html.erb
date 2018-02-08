@@ -31,7 +31,7 @@
   <div class="tab-content">
 
     <!-- Tab: List all results -->
-    <div role="tabpanel" class="tab-pane active" id="portfolio">
+    <div id="portfolio" role="tabpanel" class="tab-pane active">
       <%- if @response.empty? %>
         <%= render "zero_results" %>
       <%- elsif render_grouped_response? %>
@@ -43,7 +43,7 @@
     </div>
 
     <!-- Tab: Visualizations/ Caluculations -->    
-    <div role="tabpanel" class="tab-pane" id="visualization">
+    <div id="visualization" role="tabpanel" class="tab-pane" >
       <% if @response.total != 0 %>
         <%= render 'visualization_tooltip' %>
         <div class="row visualization_line">
@@ -87,16 +87,16 @@
       <% end #if clause %>
     </div>
 
-    <!-- Tab: Ressources -->   
-    <div role="tabpanel" class="tab-pane" id="ressource">
+    <!-- Tab: Ressources -->
+    <div id="ressource" role="tabpanel" class="tab-pane">
       <h3 class="index_title document-title-heading col-md-12">Wissenschaftliche Quellen (Todo)</h3>
       <%= render 'wissenschaftliche_quellen' %>
       <h3 class="index_title document-title-heading col-md-12">Verlinkungen (TODO)</h3>
       <%= render 'verlinkungen' %>
     </div>  
 
-    <!-- Tab: Media list -->   
-    <div role="tabpanel" class="tab-pane" id="media">
+    <!-- Tab: Media list -->
+    <div id="media" role="tabpanel" class="tab-pane">
       <h3 class="index_title document-title-heading col-md-12">Uploaded Images</h3>
       <%= render 'tab_media' %>
     </div>

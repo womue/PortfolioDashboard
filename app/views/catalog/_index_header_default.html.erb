@@ -19,10 +19,10 @@
         <%= t('blacklight.search.documents.counter', counter: counter) %>
       </span>
     <% end %>
-    
+
     <%# Link to the single view %>
-    <% link_name = doc_presenter.field_value 'title'.to_s %>
-    <%= link_to "#{link_name}", "/catalog/#{doc_presenter.field_value 'id'}"%>
+    <% title = doc_presenter.field_value "title".to_s %>
+    <%= link_to "#{title}", "/catalog/#{doc_presenter.field_value 'id'}"%>
   </h3>
 
   <%= document_actions %>
