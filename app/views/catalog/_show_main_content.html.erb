@@ -1,5 +1,5 @@
 <%
-# Rendering a single result??
+# Rendering detail view of single result
 # To change shown portfolio details of first tab see show_default.html and the rendered .erb's
 # To change the upper dom elements see show.html.erb
 %>
@@ -15,10 +15,11 @@
   <!-- Nav tabs -->
   <ul class="nav nav-tabs" role="tablist">
     <li role="presentation" class="active"><a href="#<%= t('blacklight.tabs.view')%>" aria-controls="<%= t('blacklight.tabs.view')%>" role="tab" data-toggle="tab"><%= t('blacklight.tabs.view')%></a></li>
-    <li role="presentation"><a href="#<%= t('blacklight.tabs.view')%>" aria-controls="<%= t('blacklight.tabs.view')%>" role="tab" data-toggle="tab"><%= t('blacklight.tabs.visualization')%></a></li>
-    <li role="presentation"><a href="#<%= t('blacklight.tabs.view')%>" aria-controls="<%= t('blacklight.tabs.view')%>" role="tab" data-toggle="tab"><%= t('blacklight.tabs.ressource')%></a></li>
-    <li role="presentation"><a href="#<%= t('blacklight.tabs.view')%>" aria-controls="<%= t('blacklight.tabs.view')%>" role="tab" data-toggle="tab"><%= t('blacklight.tabs.media')%></a></li>
+    <li role="presentation"><a href="#<%= t('blacklight.tabs.visualization')%>" aria-controls="<%= t('blacklight.tabs.visualization')%>" role="tab" data-toggle="tab"><%= t('blacklight.tabs.visualization')%></a></li>
+    <li role="presentation"><a href="#<%= t('blacklight.tabs.ressource')%>" aria-controls="<%= t('blacklight.tabs.ressource')%>" role="tab" data-toggle="tab"><%= t('blacklight.tabs.ressource')%></a></li>
+    <li role="presentation"><a href="#<%= t('blacklight.tabs.media')%>" aria-controls="<%= t('blacklight.tabs.media')%>" role="tab" data-toggle="tab"><%= t('blacklight.tabs.media')%></a></li>
   </ul>
+
 
   <!-- Tab panels -->
   <div class="tab-content tab_single_portfolio">
