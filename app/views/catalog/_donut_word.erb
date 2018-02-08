@@ -1,39 +1,33 @@
-<% 
-# Explanation: 
-# TODO: Get content words and filling words from solr - they currently are faked
-# TODO: Transfer local CSS into application.css
-# TODO: WHY IS THIS DONUT SHOWING THE AVERAGE WORDS???
+<%#
+Explanation: Summing up 'nrwords' of one or more documents and build a donut chart.
+This file is used in results-overview (many documents) and single view (one document)
+TODO: Get content words and filling words from solr - they currently are faked
+TODO: Transfer local CSS into application.css
+
+Source of Donut Chart: farazshuja @ https://bl.ocks.org
+https://bl.ocks.org/farazshuja/afd5e5f492fd00dd0ac4644d53716f4e
+LICENSE Released under the GNU General Public License, version 3.
 -%>
 
 <%# Calculate average of nrWords %>
-<% @sum_nrwords = 0; -%>
-<% counter = 0; -%>
+<% @sum_nrwords = 0 %>
 <% @response.documents.each do |object| -%>
   <% doc_presenter = index_presenter(object) %>
-  <% @sum_nrwords = @sum_nrwords + (doc_presenter.field_value "nrWords").to_i %>
-  <% counter += 1 %>
+  <% @sum_nrwords += (doc_presenter.field_value "nrWords").to_i %>
 <% end -%>
-<% @average_words = @sum_nrwords/counter -%>
 
-
-
-<!-- Source of Donut Chart: farazshuja @ https://bl.ocks.org -->
-<!-- https://bl.ocks.org/farazshuja/afd5e5f492fd00dd0ac4644d53716f4e -->
-<!-- LICENSE Released under the GNU General Public License, version 3. -->
-
-<!-- Div where donut chart gets appended -->
+<%# Div to append chart %>
 <div class="donut_word"></div>
 
 <script>
 
     // Use value of ruby variable in JS and fake some
-    var average_words =  <%= @average_words%>;
-    var sum_nrwords = <%= @sum_nrwords%>;
+    var sum_nrwords = <%= @sum_nrwords %>;
 
     // FAKE THE DATA. TODO: Get them from solr
-    var fill_words =  parseInt(average_words*0.6);
-    var content_words = parseInt(average_words*0.4);
-    var lexical_density = parseInt((fill_words/average_words)*100);
+    var fill_words =  parseInt(sum_nrwords*0.6);
+    var content_words = parseInt(sum_nrwords*0.4);
+    var lexical_density = parseInt((fill_words/sum_nrwords)*100);
 
     var data = [
       {name: 'Füllwörter', count: fill_words, percentage: 60, color: '#71A7C7'},
@@ -155,6 +149,5 @@
       .text(function(d){return d.data.name;})
       .attr("x",  12)
       .attr("y", 5);
-
 
   </script>

@@ -1,8 +1,11 @@
-<% 
-# Explanation: 
-# TODO: Transfwe local CSS into application.css
-# TODO: Transfer local CSS into application.css
--%>
+<%#
+Explanation: 
+TODO: Transfer local CSS into application.css
+
+Source of Donut Chart: farazshuja @ https://bl.ocks.org
+https://bl.ocks.org/farazshuja/afd5e5f492fd00dd0ac4644d53716f4e
+LICENSE Released under the GNU General Public License, version 3.
+%>
 
 <%# Initialize count variables%>
 <% sum_nrimages = 0 %>
@@ -16,11 +19,7 @@
   <%# sum_nrfiles = sum_nrfiles + (doc_presenter.field_value "nrImages").to_i %>
 <% end -%>
 
-<!-- Source of Donut Chart: farazshuja @ https://bl.ocks.org -->
-<!-- https://bl.ocks.org/farazshuja/afd5e5f492fd00dd0ac4644d53716f4e -->
-<!-- LICENSE Released under the GNU General Public License, version 3. -->
-
-<!-- Div where donut chart gets appended -->
+<%# Div to append chart %>
 <div class="donut_media"></div>
 
 <script>

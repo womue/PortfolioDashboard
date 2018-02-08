@@ -1,7 +1,11 @@
-<% 
-# Explanation: 
-# TODO: Get Values from Solr
-# TODO: Replace fake variables
+<%#
+Explanation: 
+TODO: Get Values from Solr
+TODO: Replace fake variables
+
+Source of Donut Chart: farazshuja @ https://bl.ocks.org
+https://bl.ocks.org/farazshuja/afd5e5f492fd00dd0ac4644d53716f4e
+LICENSE Released under the GNU General Public License, version 3.
 -%>
 
 <%# Fake variables %>
@@ -13,17 +17,13 @@
 <%    fake_array[i] = value %>
 <% end %>
 
-<!-- Source of Donut Chart: farazshuja @ https://bl.ocks.org -->
-<!-- https://bl.ocks.org/farazshuja/afd5e5f492fd00dd0ac4644d53716f4e -->
-<!-- LICENSE Released under the GNU General Public License, version 3. -->
 
-<!-- Div where donut chart gets appended -->
+<%# Div to append chart %>
 <div class="donut_link"></div>
 
 <script>
 
     // Use value of ruby variable in JS
-    var average_words = <%= @average_words %>;
     var sum_values = <%= sum_values %>;
 
     var data = [
