@@ -41,7 +41,9 @@ class CatalogController < ApplicationController
     # config.solr_path = 'select'
 
     # items to show per page, each number in the array represent another option to choose from.
-    config.per_page = [10,20,50,100]
+    # The default_per_page can be used to offer a default per-page value that isn't the smallest value.
+    config.per_page = [10,20,50,100,1000,99999]
+    config.default_per_page = 100
 
     # ---- Default parameters for single-documents ---- 
     # A counter-part to default_solr_params is default_document_solr_params, which is sent 
@@ -228,7 +230,6 @@ class CatalogController < ApplicationController
     end
 
 =begin
-
     # Specifying a :qt only to show it's possible, and so our internal automated
     # tests can test it. In this case it's the same as
     # config[:default_solr_parameters][:qt], so isn't actually neccesary.
