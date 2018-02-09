@@ -35,6 +35,7 @@
     <!-- Tab: Visualizations/ Caluculations -->  
     <div role="tabpanel" class="tab-pane" id="<%= t('blacklight.tabs.visualization')%>">
       <%= render 'visualization_tooltip' %>
+
       <div class="row visualization_line">
         <div class="col-sm-4 col-md-4">
           <h5>Wortanzahl (TODOS)</h5>
@@ -48,9 +49,17 @@
         <div class="col-sm-4 col-md-4">
           <h5>Medienverteilung</h5>
           <%= render 'donut_media' %>
-        </div>                       
+        </div>
       </div>
+
+      <div class="row">
+        <div class="col-sm-12 col-md-12">
+          <h5>Zentrale Begriffe</h5>
+          <%= render 'word_cloud' %>
+        </div>
+      </div> 
       <%= render 'show_comparison_table' %>
+
     </div>
 
     <!-- Tab: Ressources -->
