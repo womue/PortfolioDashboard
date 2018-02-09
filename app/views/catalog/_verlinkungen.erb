@@ -1,19 +1,55 @@
-<table class="table table-hover quellen">
-	<% links = Array.new() %>
-	<% @response.documents.each do |object| -%>
-		<% doc_presenter = index_presenter(object) %>
-		<% links = doc_presenter.field_value "externalLinks" %>
-			<% unless links.to_s.strip.empty? %>
-				<% links = links.split(",") %>
-				<% links.each do |link| %>
-					<tr><td><%=link%></td></tr>
-				<% end %>
-			<% end %>
-	<% end -%>
-</table>
 
+<% all_nr_links = 0 %>
+<% links = Array.new() %>
 
-<%# unless links.to_s.strip.empty? %>
-	<%# links = links.split(",") %>
-	<%# links[-1] = links[-1].sub!("and", "") %>
-<%# end %>
+<%# Sunmming nrExternalLinks %>
+<% @response.documents.each do |object| -%>
+	<% doc_presenter = index_presenter(object) %>
+	<% all_nr_links += (doc_presenter.field_value "nrExternalLinks").to_i %>
+<% end -%>
+
+<div class="documents-list">
+	<%# Headline %>
+	<div class="row">
+		<div class="col-sm-12 col-md-12">
+			<h4><%= t('blacklight.results.nrExternalLinks')%> (<%= all_nr_links %>):</h4>
+			<small>Daten werden vom Analyzer nicht geliefert.</small>
+		</div>
+	</div>
+
+	<%# List externalLinks per mahara view %>
+	<div class="row">
+		<div class="col-sm-12 col-md-12">
+
+			<% @response.documents.each do |object| -%>
+				<% doc_presenter = index_presenter(object) %>
+				<div class="document">
+					<div class="documentHeader row">
+						<h5 class="document-title-heading col-md-12">
+							<%# Author and title of view %>
+							<% author = doc_presenter.field_value "author" %>
+							<% title = doc_presenter.field_value "title" %>
+							<% nr_links = (doc_presenter.field_value "nrExternalLinks").to_i %>
+							<%= link_to "#{title} (#{author}) (#{nr_links})", "/catalog/#{doc_presenter.field_value 'id'}"%>
+						</h5>
+					</div>
+				</div>
+
+				<div class="document-metadata dl-horizontal dl-invert">
+					<% links = doc_presenter.field_value "externalLinks" %>
+					<% unless links.empty? %>
+						<% links = links.split(",") %>
+						<% links.each do |link| %>
+							<% link.sub!("and", "") if link.include?("and") %>
+							<% link.strip! %>
+							<tr><td><%=link%></td></tr>
+						<% end %>
+					<% else %>
+						<%= content_tag(:p, "Keine externen Links in dieser Ansicht vorhanden") %>
+					<% end %>	
+				</div>
+			<% end -%>
+
+		</div>
+	</div>
+</div>
