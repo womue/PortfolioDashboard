@@ -20,9 +20,9 @@
 			<img src="/result/student-placeholder.png" alt="student-placeholder" class="student-placeholder" />
 		</div>
 		<div class="col-sm-11 col-md-11">
-			<div class="result_sub"><%= t('blacklight.results.author')%><%= doc_presenter.field_value "author" %></div>
-			<div class="result_sub"><%= t('blacklight.results.lecture')%><%= doc_presenter.field_value "lecture" %></div>
-			<div class="result_sub"><%= t('blacklight.results.last_modified')%><%= last_modified %></div>
+			<div class="result_sub"><%= t('blacklight.results.author') + ": "%><%= doc_presenter.field_value "author" %></div>
+			<div class="result_sub"><%= t('blacklight.results.lecture') + ": "%><%= doc_presenter.field_value "lecture" %></div>
+			<div class="result_sub"><%= t('blacklight.results.last_modified') + ": "%><%= last_modified %></div>
 			<p><%= doc_presenter.field_value "text" %><%= link_to " ... weiterlesen", "/catalog/#{doc_presenter.field_value 'id'}"%></p>
     			
 
