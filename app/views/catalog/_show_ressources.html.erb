@@ -14,8 +14,8 @@
 			<ul class="portfolio_links">
 				<% links = links.split(",") %>
 				<% links.each do |link|%>
-					<% link.strip! %>
 					<% link.sub!("and", "") if link.include?("and") %>
+					<% link.strip! %>
 					<li><%= link_to link, link, :target => "_blank" %></li>
 				<% end %>
 			</ul>
