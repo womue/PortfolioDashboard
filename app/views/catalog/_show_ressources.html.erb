@@ -2,24 +2,26 @@
 <%# TODO: Cleaning up a link should be done in analyzer %>
 
 <% doc_presenter = show_presenter(@document) %>
-<% links = doc_presenter.field_value "externalLinks" %>
+<% links = doc_presenter.field_value "externalLinks".to_s %>
 
 <div class="row">
 	<div class="col-sm-12 col-md-12">
 		<h4><%= t('blacklight.results.externalLinks')%> (<%=doc_presenter.field_value "nrExternalLinks"%>):</h4>
-		<ul class="portfolio_links">
-			<% unless links.to_s.strip.empty? %>
+		<small>Daten werden vom Analyzer nicht geliefert.</small>
+		<%= links %>
+		
+		<% unless links.empty? %>
+			<ul class="portfolio_links">
 				<% links = links.split(",") %>
-				<% if links.size > 1 %>
-					<% links[-1] = links[-1].sub!("and", "") %>
-				<% end %>
 				<% links.each do |link|%>
+					<% link.strip! %>
+					<% link.sub!("and", "") if link.include?("and") %>
 					<li><%= link_to link, link, :target => "_blank" %></li>
 				<% end %>
-			<% else %>
-				Keine externe Links vorhanden						
-			<% end %>			
-		</ul>
+			</ul>
+		<% else %>
+			<%= content_tag(:p, "Keine externen Links in dieser Ansicht vorhanden") %>
+		<% end %>
+
 	</div>
 </div>
-

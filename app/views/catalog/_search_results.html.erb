@@ -58,8 +58,7 @@
           <div class="col-sm-4 col-md-4">
             <h5>Wortanzahl (TODOS)</h5>
             <%= render 'donut_word' %>
-            Das Kreisinnere stimmt. <br>
-            Das Äußere sind Fakes
+            <small>Das Kreisinnere stimmt.<br>Das Äußere sind Fakes</small>
           </div>
           <div class="col-sm-4 col-md-4">
             <h5>Häufigste Verlinkungen (Fake)</h5>
@@ -98,7 +97,7 @@
 </div>
 
 <script>
-  // If tab 'media' is clicked, force lazy loader to let images in current viewport appear
+  // If tab 'media' clicked, force 'unveil' to show images.
   $('a[href="#media"]').click(function (e) {
     e.preventDefault();
     $(this).tab('show');
