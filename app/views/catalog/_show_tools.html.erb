@@ -25,7 +25,7 @@
 
   <div class="panel-body">
     <ul class="nav">
-        <li><a href="<%= doc_presenter.field_value "url" %>"><%=t('blacklight.tools.mahara')%></a></li>
+        <li><%= link_to t('blacklight.tools.mahara'), "#{doc_presenter.field_value 'url'}", :target => '_blank' %></li>
         <% if assessed == true %>
           <li><a href="test"><%=t('blacklight.tools.not_assessed')%></a></li>
         <% else %>
