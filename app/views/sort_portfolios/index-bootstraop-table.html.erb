@@ -35,7 +35,7 @@ $(function(){
 	solr = RSolr.connect :url => server
 	response = solr.get 'select', :params => {
 		:q=> query,
-		:fl=>['author', 'portfolio_title', 'title', 'lecture', 'cohort', 'id', 'text'],
+		:fl=>['author', 'portfolio_title', 'title', 'lecture', 'group', 'id', 'text'],
 		:wt => :ruby,
 		:hl => false,
 		:rows => 1000
@@ -52,7 +52,7 @@ $(function(){
 					<ol>
 						<li>
 							<%= label :search_field, "Feld wählen: " %>
-							<%= select_tag :search_field, options_for_select([ "all", "author_de", "portfolio_title", "title", "lecture", "cohort", "id"], "all") %>
+							<%= select_tag :search_field, options_for_select([ "all", "author_de", "portfolio_title", "title", "lecture", "id", "group"], "all") %>
 						</li>
 						<li>	
 							<%= label :search_word, "Suchbegriff: " %>
@@ -78,7 +78,7 @@ $(function(){
 				<ol>
 					<li>
 						<%= label :field, "Feld wählen: " %>
-						<%= select_tag :field, options_for_select([ "author", "portfolio_title", "title", "lecture", "cohort", "id"], "lecture") %>
+						<%= select_tag :field, options_for_select([ "author", "portfolio_title", "title", "lecture", "id", "group"], "lecture") %>
 					</li>	
 					<li>	
 						<%= label :new_content, "Neuer Feldinhalt: " %>
@@ -116,7 +116,7 @@ $(function(){
 							<th>Studierender</th>
 							<th>Portfolio Titel</th>
 							<th>Titel</th>
-							<th>Kohorte</th>
+							<th>Gruppe</th>
 							<th>Seminar</th>
 							<th>Link</th>
 						</tr>
@@ -129,7 +129,7 @@ $(function(){
 							<th>Studierender</th>
 							<th>Portfolio Titel</th>
 							<th>Titel</th>
-							<th>Kohorte</th>
+							<th>Gruppe</th>
 							<th>Seminar</th>
 							<th>Link</th>
 						</tr>
@@ -144,7 +144,7 @@ $(function(){
 								<td><%=doc["author"]%></td>
 								<td><%=doc["portfolio_title"]%></td>
 								<td><%=doc["title"]%></td>
-								<td><%=doc["cohort"]%></td>
+								<td><%=doc["group"]%></td>
 								<td><%=doc["lecture"]%></td>
 								<td><%="Link"%></td>
 							</tr>

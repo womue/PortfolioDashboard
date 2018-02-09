@@ -41,7 +41,7 @@
 	solr = RSolr.connect :url => server
 	response = solr.get 'select', :params => {
 		:q=> query,
-		:fl=>['author', 'portfolio_title', 'title', 'lecture', 'cohort', 'id'],
+		:fl=>['author', 'portfolio_title', 'title', 'lecture', 'group', 'id'],
 		:wt => :ruby,
 		:hl => false,
 		:rows => 1000
@@ -73,7 +73,7 @@
 				<ol>
 					<li>
 						<%= label :search_field, "Feld wählen: " %>
-						<%= select_tag :search_field, options_for_select([ "all", "author_de", "portfolio_title", "title", "lecture", "cohort", "id"], "all"), class: 'form-control' %>
+						<%= select_tag :search_field, options_for_select([ "all", "author_de", "portfolio_title", "title", "lecture", "id", "group"], "all"), class: 'form-control' %>
 					</li>
 					<li>	
 						<%= label :search_word, "Suchbegriff: " %>
@@ -99,7 +99,7 @@
 					<ol>
 						<li>
 							<%= label :field, "Feld wählen: " %>
-							<%= select_tag :field, options_for_select([ "author", "portfolio_title", "title", "lecture", "cohort", "id"], "lecture"), class: 'form-control'%>
+							<%= select_tag :field, options_for_select([ "author", "portfolio_title", "title", "lecture", "id", "group"], "lecture"), class: 'form-control'%>
 						</li>
 						<li>	
 							<%= label :new_content, "Neuer Feldinhalt: " %>
@@ -142,7 +142,7 @@
 								<th>Studierender</th>
 								<th>Portfolio Titel</th>
 								<th>Titel</th>
-								<th>Kohorte</th>
+								<th>Gruppe</th>
 								<th>Seminar</th>
 								<th>Link</th>
 							</tr>
@@ -154,7 +154,7 @@
 									<td><%=doc["author"]%></td>
 									<td><%=doc["portfolio_title"]%></td>
 									<td><%=doc["title"]%></td>
-									<td><%=doc["cohort"]%></td>
+									<td><%=doc["group"]%></td>
 									<td><%=doc["lecture"]%></td>
 									<td><%=link_to "öffnen", "../catalog/#{doc['id']}"%></td>
 								</tr>
