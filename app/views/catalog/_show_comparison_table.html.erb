@@ -1,108 +1,83 @@
-<%# ---- Comparison preparation---- %>
 <% 
-#require 'rsolr'
+	#require 'rsolr'
+
+	# Get author, lecture and group from document
+	doc_presenter = show_presenter(@document)
+	author = doc_presenter.field_value "author"
+	lecture = doc_presenter.field_value "lecture"
+	lecture_search = "lecture: \"#{lecture}\""
+	group = doc_presenter.field_value "group"
+	group_search = "group: \"#{group}\""
+
+	# Fields to be requested from solr server and shown in table. Hashes are prepared below.
+	fields = ["nrWords", "nrImages", "nrUploadedImages", "nrWikipediaImages", "nrInstagramImages", "nrFlickrImages", "nrSnapchatImages", "nrPinterestImages", "nrExternalLinks", "nrWikipediaLinks"]
+	lecture_data = {:nrWords=> 0, :nrImages=> 0, :nrUploadedImages=> 0, :nrWikipediaImages=> 0, :nrInstagramImages=> 0, :nrFlickrImages=> 0, :nrSnapchatImages=> 0, :nrPinterestImages=> 0, :nrExternalLinks=> 0, :nrWikipediaLinks=> 0 }
+	group_data = {:nrWords=> 0, :nrImages=> 0, :nrUploadedImages=> 0, :nrWikipediaImages=> 0, :nrInstagramImages=> 0, :nrFlickrImages=> 0, :nrSnapchatImages=> 0, :nrPinterestImages=> 0, :nrExternalLinks=> 0, :nrWikipediaLinks=> 0 }
+
+	# Server is globally set in application rb
+	server = Rails.application.config.solr_server
+
+	# ---- LECTURE---- 
+	# Build request to get data of students lecture
+	solr = RSolr.connect :url => server
+	response_lecture = solr.get 'select', :params => {
+		:q=> lecture_search,
+		:fl=> fields,
+		:wt => :ruby,
+		:hl => false,
+		:rows => 10000
+	}
+
+	# Sum the data of each view-fields found for the lecture
+	response_lecture["response"]["docs"].each_with_index do |doc, i|
+		lecture_data.each { |key,value| lecture_data[key] += doc["#{key}"] }
+	end
+
+	# Calculate average of each field
+	lecture_data.each do |key, value| 
+		lecture_data[key] = value/response_lecture["response"]["numFound"] if value !=0
+	end
+
+	# ---- GROUP----
+	# Build request to get data of students group
+	solr = RSolr.connect :url => server
+	response_group = solr.get 'select', :params => {
+		:q=> group_search,
+		:fl=> fields,
+		:wt => :ruby,
+		:hl => false,
+		:rows => 10000
+	}
+
+	# Sum the data of each view-fields found for the group
+	response_group["response"]["docs"].each_with_index do |doc, i|		
+		group_data.each { |key,value| group_data[key] += doc["#{key}"] }
+	end
+
+	# Calculate average of each field
+	group_data.each do |key, value| 
+		group_data[key] = value/response_group["response"]["numFound"] if value !=0
+	end
+
 %>
-<% doc_presenter = show_presenter(@document) %>
-
-<% lecture = doc_presenter.field_value "lecture" %>
-<% lecture_search = "lecture: \"#{lecture}\"" %>
-<% group = doc_presenter.field_value "group" %>
-<% group_search = "group: \"#{group}\"" %>
-
-<%# ---- LECTURE---- %>
-<%
-# Server is globally set in application rb
-server = Rails.application.config.solr_server
-solr = RSolr.connect :url => server
-response_lecture = solr.get 'select', :params => {
-	:q=> lecture_search,
-	:fl=>['nrWords', 'nrImages', 'nrUploadedImages', 'nrWikipediaImages', 'nrInstagramImages', 'nrFlickrImages', 'nrSnapchatImages', 'nrPinterestImages', 'nrExternalLinks', 'nrWikipediaLinks'],
-	:wt => :ruby,
-	:hl => false,
-	:rows => 10000
-}
-%>
-
-<% lecture_data = {:nrWords=> 0, :nrImages=> 0, :nrUploadedImages=> 0, :nrWikipediaImages=> 0, :nrInstagramImages=> 0, :nrFlickrImages=> 0, :nrSnapchatImages=> 0, :nrPinterestImages=> 0, :nrExternalLinks=> 0, :nrWikipediaLinks=> 0}%>
-<% response_lecture["response"]["docs"].each_with_index do |doc, i| %>
-	<% lecture_data[:nrWords] = lecture_data[:nrWords]+doc["nrWords"] %>
-	<% lecture_data[:nrImages] = lecture_data[:nrImages]+doc["nrImages"] %>
-	<% lecture_data[:nrUploadedImages] = lecture_data[:nrUploadedImages]+doc["nrUploadedImages"] %>
-	<% lecture_data[:nrWikipediaImages] = lecture_data[:nrWikipediaImages]+doc["nrWikipediaImages"] %>
-	<% lecture_data[:nrInstagramImages] = lecture_data[:nrWikipediaImages]+doc["nrWikipediaImages"] %>
-	<% lecture_data[:nrFlickrImages] = lecture_data[:nrWikipediaImages]+doc["nrWikipediaImages"] %>
-	<% lecture_data[:nrSnapchatImages] = lecture_data[:nrWikipediaImages]+doc["nrWikipediaImages"] %>
-	<% lecture_data[:nrPinterestImages] = lecture_data[:nrWikipediaImages]+doc["nrWikipediaImages"] %>
-	<% lecture_data[:nrExternalLinks] = lecture_data[:nrExternalLinks]+doc["nrExternalLinks"] %>
-	<% lecture_data[:nrWikipediaLinks] = lecture_data[:nrWikipediaLinks]+doc["nrWikipediaLinks"] %>
-<% end %>
-
-<% lecture_data.each do |key, value| 
-	if value !=0  
-		lecture_data[key] = value/response_lecture["response"]["numFound"] 
-	end 
-end %>
-
-
-<%# ---- group---- %>
-<%
-# Server is globally set in application rb
-server = Rails.application.config.solr_server
-solr = RSolr.connect :url => server
-response_group = solr.get 'select', :params => {
-	:q=> group_search,
-	:fl=>['nrWords', 'nrImages', 'nrUploadedImages', 'nrWikipediaImages', 'nrInstagramImages', 'nrFlickrImages', 'nrSnapchatImages', 'nrPinterestImages', 'nrExternalLinks', 'nrWikipediaLinks'],
-	:wt => :ruby,
-	:hl => false,
-	:rows => 1000
-}
-%>
-
-<% group_data = {:nrWords=> 0, :nrImages=> 0, :nrUploadedImages=> 0, :nrWikipediaImages=> 0, :nrInstagramImages=> 0, :nrFlickrImages=> 0, :nrSnapchatImages=> 0, :nrPinterestImages=> 0, :nrExternalLinks=> 0, :nrWikipediaLinks=> 0}%>
-<% response_group["response"]["docs"].each_with_index do |doc, i| %>
-	<% group_data[:nrWords] = group_data[:nrWords]+doc["nrWords"] %>
-	<% group_data[:nrImages] = group_data[:nrImages]+doc["nrImages"] %>
-	<% group_data[:nrUploadedImages] = group_data[:nrUploadedImages]+doc["nrUploadedImages"] %>
-	<% group_data[:nrWikipediaImages] = group_data[:nrWikipediaImages]+doc["nrWikipediaImages"] %>
-	<% group_data[:nrInstagramImages] = group_data[:nrWikipediaImages]+doc["nrWikipediaImages"] %>
-	<% group_data[:nrFlickrImages] = group_data[:nrWikipediaImages]+doc["nrWikipediaImages"] %>
-	<% group_data[:nrSnapchatImages] = group_data[:nrWikipediaImages]+doc["nrWikipediaImages"] %>
-	<% group_data[:nrPinterestImages] = group_data[:nrWikipediaImages]+doc["nrWikipediaImages"] %>
-	<% group_data[:nrExternalLinks] = group_data[:nrExternalLinks]+doc["nrExternalLinks"] %>
-	<% group_data[:nrWikipediaLinks] = group_data[:nrWikipediaLinks]+doc["nrWikipediaLinks"] %>
-<% end %>
-
-<% group_data.each do |key, value| 
-	if value !=0  
-		group_data[key] = value/response_group["response"]["numFound"] 
-	end 
-end %>
-
 
 <%# ---- TABLE---- %>
-<h4>Studierender im Vergleich mit seinem Seminar und seiner Kohorte</h4>
+<h4>Ansicht im Vergleich mit seinem Seminar und seiner Mahara Gruppe</h4>
 <table class="table table-striped">
 	<tr>
 		<th>Feld</th>
-		<th>Person: <%= doc_presenter.field_value "author" %></th>
-		<th>Seminar: <%= doc_presenter.field_value "lecture" %> &empty; / n= <%= response_lecture["response"]["numFound"]%></th>
-		<th>Kohorte <%=group%> &empty; / n= <%= response_group["response"]["numFound"]%></th>
+		<th><%= t("blacklight.results.author")%> <% author %></th>
+		<th><%= t("blacklight.results.lecture")%> <%= lecture %> &empty; / n= <%= response_lecture["response"]["numFound"]%></th>
+		<th><%= t("blacklight.results.group")%> <%= group %> &empty; / n= <%= response_group["response"]["numFound"]%></th>
 	</tr>
 	
-	<!-- shown fields are defined in catalog_controller.rb -->
-	<% document_show_fields(@document).each do |field_name, field| -%>
+	<% fields.each do |field| %>
 		<tr>
-			<td class="blacklight-<%= field_name.parameterize %>"><%= render_document_show_field_label @document, field: field_name %></td>
-			<td class="blacklight-<%= field_name.parameterize %>"><%= doc_presenter.field_value field_name %></td>
-			<td><%= lecture_data[field_name.to_sym] %></td>
-			<td><%= group_data[field_name.to_sym] %></td>
+			<td id="<%=field%>"><%= t("blacklight.results.#{field}") %></td>
+			<td id="<%=field%>"><%= doc_presenter.field_value field %></td>
+			<td><%= lecture_data[field.to_sym] %></td>
+			<td><%= group_data[field.to_sym] %></td>
 		</tr>
-	<% end -%>
+	<% end %>
 </table>
-Weitere Felder Todo: Videos, Ressourcen, Lexikal, Dichte
-
-
-
-
-
-
+<p>Weitere Felder Todo: Videos, Ressourcen, Lexikal, Dichte</p><br>
