@@ -1,0 +1,57 @@
+<%# This file shows the media and uploaded images single document %>
+
+<%= javascript_include_tag 'lightbox.js', 'data-turbolinks-track': 'reload' %>
+
+<% doc_presenter = show_presenter(@document) %>
+<% nrUploadedImages = (doc_presenter.field_value "nrUploadedImages").to_i %>
+<% upLoadedImages = doc_presenter.field_value "upLoadedImages" %>
+<% upLoadedImages = upLoadedImages.split(",") %>
+<% upLoadedImages.uniq! %>
+<% title = doc_presenter.field_value "title".to_s %>
+<% url = doc_presenter.field_value "url".to_s %>
+
+<% links = doc_presenter.field_value "upLoadedImages" %>
+
+<div class="row">
+	<div class="col-sm-12 col-md-12">
+		<h4><%= t('blacklight.results.imageSources')%> (<%#=doc_presenter.field_value "nrUpLoadedVideos"%>):</h4>
+		<%= render 'image_source' %>
+	</div>
+</div>
+
+
+<div class="row">
+	<div class="col-sm-12 col-md-12">
+		<h4><%= t('blacklight.results.upLoadedImages')%> (<%=doc_presenter.field_value "nrUploadedImages"%>):</h4>
+		<div class="image_container">
+			<% upLoadedImages.each do |image_url| %>
+				<%# Clean up image url %>
+				<% image_url.sub!("and ", "") %>
+				<% image_url.gsub!("amp;", "") %>
+				<% image_url.strip! %>
+				<% image_url_small = image_url + "&height=80" %>
+				<%# Insert image %>
+				<%= link_to (image_url), :title => "Click to see full image", :class => "image-link", :"data-lightbox" => "upLoadedImages", :"data-title" => "Ansicht: #{link_to title, url, :target => '_blank'} </br> URL: #{link_to image_url, image_url}" do %>
+					<%= content_tag :div, class: "lightbox_thumbnail" do -%>
+					  <%= lazy_image_tag(image_url_small) %>
+					<% end -%>
+				<% end %>
+			<% end %>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-sm-12 col-md-12">
+		<h4><%= t('blacklight.results.upLoadedVideos')%> (<%#=doc_presenter.field_value "nrUpLoadedVideos"%>):</h4>
+		<small>Feld existiert noch nicht, da die Daten vom Analyzer nicht gesammelt werden.</small>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-sm-12 col-md-12">
+		<h4><%= t('blacklight.results.upLoadedFiles')%> (<%#=doc_presenter.field_value "nrUpLoadedFiles"%>):</h4>
+		<small>Feld existiert noch nicht, da die Daten vom Analyzer nicht gesammelt werden.</small>
+	</div>
+</div>
+
