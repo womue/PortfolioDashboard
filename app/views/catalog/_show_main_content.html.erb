@@ -1,5 +1,5 @@
 <%
-# Rendering detail view of single result
+# Rendering detail view of one single result
 # To change shown portfolio details of first tab see show_default.html and the rendered .erb's
 # To change the upper dom elements see show.html.erb
 %>
@@ -24,29 +24,53 @@
   <!-- Tab panels -->
   <div class="tab-content tab_single_portfolio">
     <div role="tabpanel" class="tab-pane active" id="<%= t('blacklight.tabs.view')%>">
-		<!-- Show Portfolio Content -->
+  	<!-- Show Portfolio Content -->
   		<div id="document" class="document <%= render_document_class %>" itemscope  itemtype="<%= @document.itemtype %>">
   		  <div class="show_main" id="doc_<%= @document.id.to_s.parameterize %>">
   		    <%= render_document_partials @document, blacklight_config.view_config(:show).partials %>
   		  </div>
   		</div>    
     </div>
+
+    <!-- Tab: Visualizations/ Caluculations -->  
     <div role="tabpanel" class="tab-pane" id="<%= t('blacklight.tabs.visualization')%>">
-    	<%= render 'show_comparison_table' %>
+      <%= render 'visualization_tooltip' %>
+      <div class="row visualization_line">
+        <div class="col-sm-4 col-md-4">
+          <h5>Wortanzahl (TODOS)</h5>
+          <%= render 'donut_word' %>
+          <small>Das Kreisinnere stimmt.<br>Das Äußere sind Fakes</small>
+        </div>
+        <div class="col-sm-4 col-md-4">
+          <h5>Häufigste Verlinkungen (Fake)</h5>
+          <%= render 'donut_link' %>        
+        </div>  
+        <div class="col-sm-4 col-md-4">
+          <h5>Medienverteilung</h5>
+          <%= render 'donut_media' %>
+        </div>                       
+      </div>
+      <%= render 'show_comparison_table' %>
     </div>
+
+    <!-- Tab: Ressources -->
     <div role="tabpanel" class="tab-pane" id="<%= t('blacklight.tabs.ressource')%>">
       <%= render 'show_ressources' %>
     </div>
+
+    <!-- Tab: Media list -->
     <div role="tabpanel" class="tab-pane" id="<%= t('blacklight.tabs.media')%>">
-      <%= render 'show_media' %>
+      <%= render 'show_main_content_media' %>
     </div>
   </div>
 </div>
 
-<!-- Activate Tabs -->
+
 <script>
-  $('#myTabs a').click(function (e) {
-    e.preventDefault()
-    $(this).tab('show')
-  })
+  // If tab 'media' clicked, force 'unveil' to show images.
+  $('a[href="#<%= t('blacklight.tabs.media')%>"]').click(function (e) {
+    e.preventDefault();
+    $(this).tab('show');
+    $(window).trigger("lookup");
+  });
 </script>
