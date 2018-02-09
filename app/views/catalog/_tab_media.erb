@@ -15,7 +15,6 @@
 		</div>
 	</div>	
 
-
 	<% @response.documents.each do |object| -%>		
 		<%# Obtain data %>
 		<% doc_presenter = index_presenter(object) %>
@@ -47,13 +46,13 @@
 						<% image_url.sub!("and ", "") %>
 						<% image_url.gsub!("amp;", "") %>
 						<% image_url.strip! %>
-						<% image_url_small = image_url + "&height=80" %>						
+						<% image_url_small = image_url + "&height=80" %>
 						<%# Insert image %>
 						<%= link_to (image_url), :title => "Click to see full image", :class => "image-link", :"data-lightbox" => "upLoadedImages", :"data-title" => "Ansicht: #{title} </br> URL: #{image_url}" do %>
 							<%= content_tag :div, class: "lightbox_thumbnail" do -%>
 							  <%= lazy_image_tag(image_url_small) %>
 							<% end -%>
-						<% end %>						
+						<% end %>
 					<% end %>
 				</div>
 			</div>
@@ -63,6 +62,3 @@
 
 <%# Pagination %>
 <%= render 'results_pagination' %>
-
-
-
