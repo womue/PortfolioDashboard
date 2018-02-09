@@ -1,6 +1,6 @@
 <%
 # Explanation: 
-# This file renders each result-body (!) for the whole result list
+# This file renders the content/body (!) of each result.
 # For changing the result-headline see _index_header_default.html.erb 
 # Attention: Thils file contains fake data because solr is not delivering them yet
 %>
@@ -30,13 +30,13 @@
 			<%# First row: nrWords, nrImages, nrExternalLinks and link to mahara  %>
 			<div class="row">
 				<div class="col-sm-3 col-md-3">
-					<span class="nrWords"><%= t('blacklight.results.nrWords')%><%= doc_presenter.field_value "nrWords" %></span>
+					<span class="nrWords"><%= t('blacklight.results.nrWords') + ": "%><%= doc_presenter.field_value "nrWords" %></span>
 				</div>
 				<div class="col-sm-3 col-md-3">
-					<span class="nrImages"><%= t('blacklight.results.nrImages')%><%= doc_presenter.field_value "nrImages" %></span>
+					<span class="nrImages"><%= t('blacklight.results.nrImages') + ": "%><%= doc_presenter.field_value "nrImages" %></span>
 				</div>
 				<div class="col-sm-3 col-md-3">
-					<span class="nrLinks"><%= t('blacklight.results.nrExternalLinks')%><%= doc_presenter.field_value "nrExternalLinks" %></span>
+					<span class="nrLinks"><%= t('blacklight.results.nrExternalLinks') + ": "%><%= doc_presenter.field_value "nrExternalLinks" %></span>
 				</div>
 				<div class="col-sm-3 col-md-3">
 					<span class="mahara_link"><%= link_to t('blacklight.tools.mahara'), "#{doc_presenter.field_value 'url'}", :target => '_blank' %></span>
@@ -46,13 +46,13 @@
 			<%# Second row: lexicalDensity, nrUploadedImages, nrRessources and assessed info %>
 			<div class="row">
 				<div class="col-sm-3 col-md-3">
-					<span class="lexicalDensity"><%= t('blacklight.results.lexicalDensity')%>?</span>
+					<span class="lexicalDensity"><%= t('blacklight.results.lexicalDensity') + ": "%>?</span>
 				</div>
 				<div class="col-sm-3 col-md-3">
-					<span class="nrUploadedImages"><%= t('blacklight.results.nrUploadedImages')%><%= doc_presenter.field_value "nrUploadedImages" %></span>
+					<span class="nrUploadedImages"><%= t('blacklight.results.nrUploadedImages') + ": "%><%= doc_presenter.field_value "nrUploadedImages" %></span>
 				</div>
 				<div class="col-sm-3 col-md-3">
-					<span class="nrRessources"><%= t('blacklight.results.nrRessources')%>?</span>
+					<span class="nrRessources"><%= t('blacklight.results.nrRessources') + ": "%>?</span>
 				</div>
 
 				<div class="col-sm-3 col-md-3">
