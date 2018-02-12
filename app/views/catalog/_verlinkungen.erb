@@ -55,8 +55,9 @@
 						<% links_hash = links_hash.sort_by {|k,v| k} %>
 
 						<ul>
+							<%# print links %>
 							<% links_hash.each do |link_short, link| %>
-								<li><%= link_to link_short, link, :target => '_blank' %></li>
+								<li><%= link_to link, link, :target => '_blank' %></li>
 							<% end %>
 						</ul>
 					<% else %>
