@@ -25,6 +25,10 @@ gem 'rsolr', '~> 1.0'
 # See http://luis-almeida.github.io/unveil/
 gem 'unveil-rails', '~> 0.2.1'
 
+# Domain parsing using Addressable
+# https://github.com/samnissen/adomain
+gem 'adomain'
+
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '5.0.2'
