@@ -1,21 +1,55 @@
 <%#
-Explanation: 
-TODO: Get Values from Solr
-TODO: Replace fake variables
+Explanation: This donut chart shows the mostly used links
+TODO: Remove function def from file
 
 Source of Donut Chart: farazshuja @ https://bl.ocks.org
 https://bl.ocks.org/farazshuja/afd5e5f492fd00dd0ac4644d53716f4e
 LICENSE Released under the GNU General Public License, version 3.
 -%>
 
-<%# Fake variables %>
-<% sum_values = 0 %>
-<% fake_array = Array.new() %>
-<% 5.times do |i| %>
-<%    value = rand(5..15) %>
-<%    sum_values += value %>
-<%    fake_array[i] = value %>
-<% end %>
+<% 
+require 'uri' 
+require 'json'
+
+def valid_url?(url)
+  url_regexp = /^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/ix
+  url =~ url_regexp ? true : false
+end
+
+colors = ["#3182BD", "#9ECAE1", "#FD8D3C", "#FDAE6B", "#31A354", "#A1D99B", "#756BB1", "#BCBDDC", "#AD494A", "#D6616B"]
+nr_links = 6
+
+valid_links = Array.new
+invalid_links = Array.new
+
+@response.documents.each do |object|
+  doc_presenter = index_presenter(object)
+  doc_links = doc_presenter.field_value "externalLinks"
+  next if doc_links.empty?
+  doc_links = doc_links.split(",")
+  
+  doc_links.each do |link|
+    link.downcase!
+    link.sub!("and", "") if link.include?("and")
+    link.strip!
+    valid_url?(link) ? (valid_links << Adomain.domain(link)) : (invalid_links << link)
+  end
+end
+
+# Get frequencies of domains and sort descending
+frequencies = Hash.new(0)
+valid_links.each{|link| frequencies[link] += 1}
+frequencies = frequencies.sort_by {|k,v| v}.reverse
+
+data = Array.new
+sum_values = 0
+frequencies.first(nr_links).each { |k, v| sum_values += v }
+
+frequencies.first(nr_links).each_with_index do |(k,v),i|
+  percentage = (sum_values/v).to_i
+  data << {'name': k, 'count': v, 'percentage': v, 'color': colors[i]}
+end
+%>
 
 
 <%# Div to append chart %>
@@ -25,15 +59,8 @@ LICENSE Released under the GNU General Public License, version 3.
 
     // Use value of ruby variable in JS
     var sum_values = <%= sum_values %>;
+    var data = <%= raw data.to_json %>
 
-    var data = [
-      {name: 'Wikipedia.de', count: <%= fake_array[0] %>, percentage: <%= fake_array[0] %>, color: '#71A7C7'},
-      {name: 'IT-Wissen.info', count: <%= fake_array[1] %>, percentage: <%= fake_array[1] %>, color: '#4284B3'},
-      {name: 'Learn ruby the hard way.com', count: <%= fake_array[2] %>, percentage: <%= fake_array[2] %>, color: '#9ABDD0'},
-      {name: 'Heise.de', count: <%= fake_array[3] %>, percentage: <%= fake_array[3] %>, color: '#FDD0A2'},
-      {name: 'Computerlexikon.com', count: <%= fake_array[4] %>, percentage: <%= fake_array[4] %>, color: '#E68C4B'}
-    ]; //See http://bl.ocks.org/aaizemberg/78bd3dade9593896a59d
-    
     var width = 260, height = 150, radius = 74;
     var legend_left = 84; // margin left from center
     var inner_top = 7; // margin left for inner value    
@@ -97,7 +124,7 @@ LICENSE Released under the GNU General Public License, version 3.
       .attr('font-size', '0.83em')      
       .attr("fill", "white")
       .text(function(d) {
-        if(d.data.percentage < 3) {return '';}
+        //if(d.data.percentage < 3) {return '';}
         return d.data.percentage;    
       })
       .on("mouseover", function(d){
@@ -130,12 +157,12 @@ LICENSE Released under the GNU General Public License, version 3.
     .on("mousemove", function(){return tooltip.style("top", (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+20)+"px");})
     .on("mouseout", function(){return tooltip.style("visibility", "hidden");}) ;
 
-    // Legend (Füllwörter, Inhaltswörter)
+    // Legende
     var donut_legend = svg.selectAll(".donut_legend")
       .data(pie(data))
       .enter().append("g")
       .attr("transform", function(d,i){
-        return "translate(" + legend_left + "," + (-6.2 * data.length + i * 17) + ")";
+        return "translate(" + legend_left + "," + (-<%= nr_links+1 %> * data.length + i * 17) + ")";
       })
       .attr("class", "donut_legend");   
     
@@ -149,6 +176,5 @@ LICENSE Released under the GNU General Public License, version 3.
       .text(function(d){return d.data.name;})
       .attr("x",  12)
       .attr("y", 5);
-
 
   </script>
